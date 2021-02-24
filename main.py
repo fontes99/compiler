@@ -27,7 +27,7 @@ res += nums[0]
 print(op)
 print(nums)
 
-for i in range(len(num)):
+for i in range(len(op)):
     if op[i] == '+':
         res += nums[i+1]
     if op[i] == '-':
