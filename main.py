@@ -9,18 +9,41 @@ op = []
 
 num = ''
 
-for i in conta:
+flag_number = None
+flag_space = False
 
-    if i == ' ':
-        pass
-    elif i !='+' and i != '-':
-        num += i
+for i in range(len(conta)):
+
+    if conta[i] == ' ':
+        flag_space = True
+    
+    elif conta[i] !='+' and conta[i] != '-':
+        
+        if (flag_space and flag_number):
+            raise ValueError
+
+        num += conta[i]
+        flag_space = False
+        flag_number = True
+    
     else:
-        op.append(i)
-        nums.append(int(num))
+        flag_space = False
+        flag_number = False
+        op.append(conta[i])
+
+        try:
+            nums.append(int(num))
+        except ValueError:
+            print('U need to use numbers, dummy...')
+            raise
+
         num = ''
 
-nums.append(int(num))
+try:
+    nums.append(int(num))
+except ValueError:
+    print('U need to use numbers, dummy...')
+    raise
 
 res += nums[0]
 
