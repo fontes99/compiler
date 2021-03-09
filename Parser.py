@@ -35,5 +35,6 @@ class Parser:
 
     def run(self, code):
         self.tokenizer = Tokenizer(code, 0, None)
+        self.tokenizer.selectNext()
         return self.parseExpression()
 
