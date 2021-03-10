@@ -1,4 +1,4 @@
-from Tokenizer import Tokenizer
+from .Tokenizer import Tokenizer
 
 class Parser:
     def __init__(self):

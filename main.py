@@ -1,4 +1,4 @@
-from Parser import Parser
+from Classes.Parser import Parser
 import sys
 
 expression = sys.argv[1]
