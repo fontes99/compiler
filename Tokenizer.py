@@ -16,8 +16,9 @@ class Tokenizer:
             self.position += 1
             return
 
-        # elif self.origin[self.position] == ' ':
-        #     self.position += 1
+        elif self.origin[self.position] == ' ':
+            self.position += 1
+            
 
         elif self.origin[self.position] == '+':
             self.actual = Token('SUM', self.origin[self.position])
@@ -36,9 +37,4 @@ class Tokenizer:
                 self.position += 1
 
             self.actual = Token('INT', int(val))
-
-
-
-
-
 
