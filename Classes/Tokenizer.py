@@ -14,9 +14,16 @@ class Tokenizer:
 
         if self.position == len(self.origin):
             self.actual = Token('EOF', '"')
-            self.position += 1
             return
 
+        elif self.origin[self.position] == '/':
+            self.actual = Token('DIV', self.origin[self.position])
+            self.position += 1
+
+        elif self.origin[self.position] == '*':
+            self.actual = Token('MULT', self.origin[self.position])
+            self.position += 1
+        
         elif self.origin[self.position] == '+':
             self.actual = Token('SUM', self.origin[self.position])
             self.position += 1
@@ -36,3 +43,6 @@ class Tokenizer:
 
             self.actual = Token('INT', int(val))
 
+
+        # print(self.actual.tipo, self.actual.value)
+        # print(self.position, len(self.origin))
