@@ -1,4 +1,5 @@
 from .Tokenizer import Tokenizer
+from .Token import Token
 
 class Parser:
     def __init__(self):
@@ -61,7 +62,7 @@ class Parser:
 
 
     def run(self, code):
-        self.tokenizer = Tokenizer(code, 0, None)
+        self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
         self.tokenizer.selectNext()
         return self.parseExpression()
 
