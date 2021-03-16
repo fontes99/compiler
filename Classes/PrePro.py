@@ -24,9 +24,4 @@ class PrePro:
                 exp_final += exp[i]
                 i += 1
         
-        # if exp[i] != '/' and exp[i-1] != '*': exp_final += exp[i]
-
         return exp_final
-
-prepro = PrePro()
-print(prepro.filter('/*a*/1/*aasa*/+1'))
