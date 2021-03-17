@@ -7,4 +7,4 @@ expression = sys.argv[1]
 parser = Parser()
 prepro = PrePro()
 
-print(parser.run(prepro.filter(expression)))
+print(int(parser.run(prepro.filter(expression))))

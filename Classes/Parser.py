@@ -54,7 +54,6 @@ class Parser:
                         res -= self.parseTerm()
                     else: raise ValueError
                 
-                self.tokenizer.selectNext()
 
             return res
 
