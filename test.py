@@ -45,6 +45,13 @@ def test_comment2():
 def test_comment3():
     assert int(subprocess.check_output("python3 main.py '1 - /*2+4* / */ 1'", shell=True)) == 0
 
+# Factor
+def test_factor_m_m():
+    assert int(subprocess.check_output("python3 main.py '--77'", shell=True)) == 77
+
+def test_factor_p_m_m_p_p():
+    assert int(subprocess.check_output("python3 main.py '+--++3'", shell=True)) == 3
+
 # Misc
 def test_sum_sub_space():
     assert int(subprocess.check_output("python3 main.py '100 + 100 -  100+1'", shell=True)) == 101
@@ -56,7 +63,5 @@ def test_big_spaces():
 
 # Sem erros:
 # >> (3 + 2) /5
-# >> --77
-# >> +--++3
 # >> 3 - -2/4
 # >> 4/(1+1)*2
