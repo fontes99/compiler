@@ -25,11 +25,11 @@ class Tokenizer:
             self.position += 1
         
         elif self.origin[self.position] == '+':
-            self.actual = Token('SUM', self.origin[self.position])
+            self.actual = Token('SUM', 1)
             self.position += 1
 
         elif self.origin[self.position] == '-':
-            self.actual = Token('SUB', self.origin[self.position])
+            self.actual = Token('SUB', -1)
             self.position += 1
 
         else: 
