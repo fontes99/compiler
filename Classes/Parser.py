@@ -6,13 +6,16 @@ class Parser:
         self.tokenizer = None
 
     def parseFactor(self):
-        self.tokenizer.selectNext()
 
         if self.tokenizer.actual.tipo == 'INT':
-            return self.tokenizer.actual.value
+            tmp = self.tokenizer.actual.value
+            self.tokenizer.selectNext()
+            return tmp
 
         if self.tokenizer.actual.tipo == 'SUM' or self.tokenizer.actual.tipo == 'SUB':
-            return self.tokenizer.actual.value * self.parseFactor()
+            tmp = self.tokenizer.actual.value
+            self.tokenizer.selectNext()
+            return tmp * self.parseFactor()
 
         else:
             raise ValueError
@@ -21,21 +24,19 @@ class Parser:
     def parseTerm(self):
 
         res = self.parseFactor()
-        self.tokenizer.selectNext()
 
         while self.tokenizer.actual.tipo == 'DIV' or self.tokenizer.actual.tipo == 'MULT':
             
             if self.tokenizer.actual.tipo == 'DIV':
+                self.tokenizer.selectNext()
                 res /= self.parseFactor()
-            else: raise ValueError
             
-            if self.tokenizer.actual.tipo == 'MULT':
+            elif self.tokenizer.actual.tipo == 'MULT':
+                self.tokenizer.selectNext()
                 res *= self.parseFactor()
+            
             else: raise ValueError
             
-            self.tokenizer.selectNext()
-
-
         return res
 
 
@@ -67,5 +68,6 @@ class Parser:
 
     def run(self, code):
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
+        self.tokenizer.selectNext()
         return self.parseExpression()
 
