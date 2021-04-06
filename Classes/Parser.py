@@ -12,10 +12,19 @@ class Parser:
             self.tokenizer.selectNext()
             return tmp
 
-        if self.tokenizer.actual.tipo == 'SUM' or self.tokenizer.actual.tipo == 'SUB':
+        elif self.tokenizer.actual.tipo == 'SUM' or self.tokenizer.actual.tipo == 'SUB':
             tmp = self.tokenizer.actual.value
             self.tokenizer.selectNext()
             return tmp * self.parseFactor()
+
+        elif self.tokenizer.actual.tipo == 'OPN':
+
+            self.tokenizer.selectNext()
+
+            tmp = self.parseExpression()
+            self.tokenizer.selectNext()
+            
+            return tmp
 
         else:
             raise ValueError
@@ -49,18 +58,13 @@ class Parser:
             
             if self.tokenizer.actual.tipo == 'SUM':
                 self.tokenizer.selectNext()
+                res += self.parseTerm()
 
-
-                if self.tokenizer.actual.tipo == 'INT':
-                    res += self.parseTerm()
-                else: raise ValueError
-            
-            if self.tokenizer.actual.tipo == 'SUB':
+            elif self.tokenizer.actual.tipo == 'SUB':
                 self.tokenizer.selectNext()
-
-                if self.tokenizer.actual.tipo == 'INT':
-                    res -= self.parseTerm()
-                else: raise ValueError
+                res -= self.parseTerm()
+            
+            else: raise ValueError
             
         return res
 

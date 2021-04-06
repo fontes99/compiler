@@ -31,6 +31,15 @@ class Tokenizer:
         elif self.origin[self.position] == '-':
             self.actual = Token('SUB', -1)
             self.position += 1
+            
+        elif self.origin[self.position] == '(':
+            self.actual = Token('OPN', '(')
+            self.position += 1
+
+        elif self.origin[self.position] == ')':
+            self.actual = Token('CLS', ')')
+            self.position += 1
+
 
         else: 
             if self.position > 0 and self.actual.tipo == 'INT': raise ValueError
