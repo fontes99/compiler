@@ -6,6 +6,7 @@ class Tokenizer:
         self.origin = origin
         self.position = position
         self.actual = actual
+        self.balance = 0
 
     def selectNext(self):
 
@@ -14,6 +15,7 @@ class Tokenizer:
 
         if self.position == len(self.origin):
             self.actual = Token('EOF', '"')
+            if self.balance != 0: raise ValueError
             return
 
         elif self.origin[self.position] == '/':
@@ -31,6 +33,20 @@ class Tokenizer:
         elif self.origin[self.position] == '-':
             self.actual = Token('SUB', -1)
             self.position += 1
+            
+        elif self.origin[self.position] == '(':
+            self.actual = Token('OPN', '(')
+            self.position += 1
+            self.balance += 1
+
+        elif self.origin[self.position] == ')':
+            self.actual = Token('CLS', ')')
+            self.position += 1
+            self.balance -= 1
+
+            if self.balance < 0:
+                raise ValueError
+
 
         else: 
             if self.position > 0 and self.actual.tipo == 'INT': raise ValueError

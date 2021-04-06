@@ -52,6 +52,15 @@ def test_factor_m_m():
 def test_factor_p_m_m_p_p():
     assert int(subprocess.check_output("python3 main.py '+--++3'", shell=True)) == 3
 
+def test_parenteses1():
+    assert int(subprocess.check_output("python3 main.py '(3 + 2) /5'", shell=True)) == 1
+
+def test_factor_meio():
+    assert int(subprocess.check_output("python3 main.py '3 - -2/4'", shell=True)) == 3           #??
+
+def test_parenteses2():
+    assert int(subprocess.check_output("python3 main.py '4/(1+1)*2'", shell=True)) == 4
+
 # Misc
 def test_sum_sub_space():
     assert int(subprocess.check_output("python3 main.py '100 + 100 -  100+1'", shell=True)) == 101
@@ -59,9 +68,3 @@ def test_sum_sub_space():
 def test_big_spaces():
     assert int(subprocess.check_output("python3 main.py '100 + 100 -  100+1                                               -101                  - 900'", shell=True)) == -900
 
-
-
-# Sem erros:
-# >> (3 + 2) /5
-# >> 3 - -2/4
-# >> 4/(1+1)*2
