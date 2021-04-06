@@ -1,25 +1,27 @@
 from .Tokenizer import Tokenizer
 from .Token import Token
+from .BinOp import BinOp
+from .UnOp import UnOp
+from .IntVal import IntVal
+from .NoOp import NoOp
 
 class Parser:
     def __init__(self):
         self.tokenizer = None
 
     def parseFactor(self):
+        self.tokenizer.selectNext()
 
         if self.tokenizer.actual.tipo == 'INT':
-            tmp = self.tokenizer.actual.value
+            tmp = IntVal(self.tokenizer.actual.value, [])
             self.tokenizer.selectNext()
             return tmp
 
         elif self.tokenizer.actual.tipo == 'SUM' or self.tokenizer.actual.tipo == 'SUB':
-            tmp = self.tokenizer.actual.value
-            self.tokenizer.selectNext()
-            return tmp * self.parseFactor()
+            tmp = self.tokenizer.actual.tipo
+            return UnOp(tmp, [self.parseFactor()]) 
 
         elif self.tokenizer.actual.tipo == 'OPN':
-
-            self.tokenizer.selectNext()
 
             tmp = self.parseExpression()
             self.tokenizer.selectNext()
@@ -27,7 +29,7 @@ class Parser:
             return tmp
 
         else:
-            raise ValueError
+            raise ValueError(f'{self.tokenizer.actual.tipo}')
 
 
     def parseTerm(self):
@@ -36,15 +38,10 @@ class Parser:
 
         while self.tokenizer.actual.tipo == 'DIV' or self.tokenizer.actual.tipo == 'MULT':
             
-            if self.tokenizer.actual.tipo == 'DIV':
-                self.tokenizer.selectNext()
-                res /= self.parseFactor()
+            if self.tokenizer.actual.tipo == 'DIV' or self.tokenizer.actual.tipo == 'MULT':
+                res = BinOp(self.tokenizer.actual.tipo, [res, self.parseFactor()])
             
-            elif self.tokenizer.actual.tipo == 'MULT':
-                self.tokenizer.selectNext()
-                res *= self.parseFactor()
-            
-            else: raise ValueError
+            else: raise ValueError('b')
             
         return res
 
@@ -56,15 +53,10 @@ class Parser:
 
         while self.tokenizer.actual.tipo == 'SUM' or self.tokenizer.actual.tipo == 'SUB':
             
-            if self.tokenizer.actual.tipo == 'SUM':
-                self.tokenizer.selectNext()
-                res += self.parseTerm()
+            if self.tokenizer.actual.tipo == 'SUM' or self.tokenizer.actual.tipo == 'SUB':
+                res = BinOp(self.tokenizer.actual.tipo, [res, self.parseTerm()])
 
-            elif self.tokenizer.actual.tipo == 'SUB':
-                self.tokenizer.selectNext()
-                res -= self.parseTerm()
-            
-            else: raise ValueError
+            else: raise ValueError('c')
             
         return res
 
@@ -72,6 +64,6 @@ class Parser:
 
     def run(self, code):
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
-        self.tokenizer.selectNext()
-        return self.parseExpression()
+        tree = self.parseExpression()
+        return int(tree.evaluate())
 
