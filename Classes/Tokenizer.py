@@ -7,6 +7,7 @@ class Tokenizer:
         self.position = position
         self.actual = actual
         self.balance = 0
+        self.builtIns = ["println"]
 
     def selectNext(self):
         
@@ -53,13 +54,15 @@ class Tokenizer:
                 raise ValueError
 
         elif char().isalpha():
-            var_name = char()
+            name = char()
             next_()
             while char().isalpha() or char().isnumeric() or char() == "_":
-                var_name += char()
+                name += char()
                 next_()
 
-            self.actual = Token('cons', var_name)
+            if name in self.builtIns: self.actual = Token('bultin', name)
+
+            else : self.actual = Token('cons', name)
 
         elif char() == "=":
             self.actual = Token('atrib', '=')
@@ -79,7 +82,3 @@ class Tokenizer:
                 next_()
 
             self.actual = Token('INT', int(val))
-
-
-        # print(self.actual.tipo, self.actual.value)
-        # print(self.position, len(self.origin))
