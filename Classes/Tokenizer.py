@@ -10,10 +10,13 @@ class Tokenizer:
 
     def selectNext(self):
         
+        def next_():
+            self.position += 1
+
         char = lambda : self.origin[self.position]
 
         while self.position < len(self.origin) and (char() == ' ' or char() == '\n'):
-            self.position += 1
+            next_()
 
         if self.position == len(self.origin):
             self.actual = Token('EOF', '"')
@@ -22,49 +25,49 @@ class Tokenizer:
 
         elif char() == '/':
             self.actual = Token('DIV', char())
-            self.position += 1
+            next_()
 
         elif char() == '*':
             self.actual = Token('MULT', char())
-            self.position += 1
+            next_()
         
         elif char() == '+':
             self.actual = Token('SUM', 1)
-            self.position += 1
+            next_()
 
         elif char() == '-':
             self.actual = Token('SUB', -1)
-            self.position += 1
+            next_()
             
         elif char() == '(':
             self.actual = Token('OPN', '(')
-            self.position += 1
             self.balance += 1
+            next_()
 
         elif char() == ')':
             self.actual = Token('CLS', ')')
-            self.position += 1
             self.balance -= 1
+            next_()
 
             if self.balance < 0:
                 raise ValueError
 
         elif char().isalpha():
             var_name = char()
-            self.position += 1
+            next_()
             while char().isalpha() or char().isnumeric() or char() == "_":
                 var_name += char()
-                self.position += 1
+                next_()
 
             self.actual = Token('cons', var_name)
 
         elif char() == "=":
             self.actual = Token('atrib', '=')
-            self.position += 1
+            next_()
 
         elif char() == ";":
             self.actual = Token('end_line', ";")
-            self.position += 1
+            next_()
 
         else: 
             if self.position > 0 and self.actual.tipo == 'INT': raise ValueError
@@ -73,7 +76,7 @@ class Tokenizer:
 
             while(self.position < len(self.origin) and char().isnumeric()):
                 val += char()
-                self.position += 1
+                next_()
 
             self.actual = Token('INT', int(val))
 
