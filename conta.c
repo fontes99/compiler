@@ -1,3 +1,6 @@
-x = 2;
 
-println(x);
+                    x = 3;
+                    y = 5;
+                    z = 3 + 5;
+                    println(z); 
+                

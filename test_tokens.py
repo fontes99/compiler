@@ -10,7 +10,7 @@ with open(sys.argv[1], 'r') as f:
 parser = Parser()
 prepro = PrePro()
 
-parser.tokenizer = Tokenizer(expression, 0, Token('INIT', '-'))
+parser.tokenizer = Tokenizer(prepro.filter(expression), 0, Token('INIT', '-'))
 parser.tokenizer.selectNext()
 
 while parser.tokenizer.actual.tipo != "EOF":

@@ -8,4 +8,4 @@ with open(sys.argv[1], 'r') as f:
 parser = Parser()
 prepro = PrePro()
 
-print(int(parser.run(prepro.filter(expression))))
+parser.run(prepro.filter(expression))

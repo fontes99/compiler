@@ -60,7 +60,7 @@ class Tokenizer:
                 name += char()
                 next_()
 
-            if name in self.builtIns: self.actual = Token('bultin', name)
+            if name in self.builtIns: self.actual = Token('builtin', name)
 
             else : self.actual = Token('cons', name)
 
@@ -69,11 +69,15 @@ class Tokenizer:
             next_()
 
         elif char() == ";":
+            
+            if self.balance != 0:
+                raise ValueError("parenteses desbalanceados na linha")
+            
             self.actual = Token('end_line', ";")
             next_()
 
         else: 
-            if self.position > 0 and self.actual.tipo == 'INT': raise ValueError
+            if self.position > 0 and self.actual.tipo == 'INT': raise ValueError("Dois ints seguidos")
 
             val = ""
 
