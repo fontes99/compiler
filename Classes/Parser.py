@@ -104,6 +104,9 @@ class Parser:
         elif self.token_tipo() == 'cons':
             self.cons()
 
+        elif self.token_tipo() == 'end_line':
+            pass
+
         else : raise ValueError("Syntax error :(")
 
 
