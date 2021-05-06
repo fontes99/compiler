@@ -22,6 +22,20 @@ def test_soma_varias():
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 8
 
 
+def teste_issue():
+    with open('conta.c', 'w') as f:
+        f.write('''
+                    x1 = 8;
+                    y2 = 5;
+
+
+
+                    z_final = (x1 + y2) * ---37;;
+                    println(z_final); 
+                ''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == -481
+
+
 # test geral
 def test_geral():
     with open('conta.c', 'w') as f:

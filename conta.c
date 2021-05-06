@@ -1,6 +1,6 @@
-
-                    x = 3;
-                    y = 5;
-                    z = 3 + 5;
-                    println(z); 
+ 
+                    x /*asdasda*/ = 3;
+                    y = 4;
+                    z = x + y + 100;
+                    println(x + y /*asdasda*/ + z); 
                 
