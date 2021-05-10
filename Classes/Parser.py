@@ -38,6 +38,16 @@ class Parser:
             self.tokenizer.selectNext()
             return tmp
 
+        elif self.token_valor() == "readln":
+            self.tokenizer.selectNext()
+
+            if self.token_tipo() != "OPN" : raise ValueError("sem ( depois de readln")
+            self.tokenizer.selectNext()
+            
+            tmp = IntVal(int(input("input: ")), [])
+            self.tokenizer.selectNext()
+            return tmp
+
         else:
             raise ValueError(f'{self.token_tipo()}')
 
@@ -83,7 +93,7 @@ class Parser:
         self.tokenizer.selectNext()
 
     def cons(self):
-        algumacoisa = self.token_valor()
+        cons_name = self.token_valor()
 
         self.tokenizer.selectNext()
 
@@ -91,7 +101,7 @@ class Parser:
 
         tree = self.parseExpression()
 
-        self.cons_table[algumacoisa] = tree.evaluate()
+        self.cons_table[cons_name] = tree.evaluate()
 
     def command(self):
 

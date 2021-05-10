@@ -7,7 +7,7 @@ class Tokenizer:
         self.position = position
         self.actual = actual
         self.balance = 0
-        self.builtIns = ["println"]
+        self.builtIns = ["println", "readln"]
 
     def selectNext(self):
         
