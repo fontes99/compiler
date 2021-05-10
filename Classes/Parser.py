@@ -33,6 +33,8 @@ class Parser:
             
             return tmp
 
+        # OREXPR
+
         elif self.token_tipo() == 'cons':
             tmp = IntVal(self.cons_table[self.token_valor()], [])
             self.tokenizer.selectNext()
@@ -81,12 +83,68 @@ class Parser:
         return res
 
 
+    def RELEXPR(self):
+
+        res = self.parseExpression()
+
+        while self.token_tipo() == 'GRT' or self.token_tipo() == 'LSS':
+            
+            if self.token_tipo() == 'GRT' or self.token_tipo() == 'LSS':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not GRT or LSS')
+            
+        return res
+
+
+    def EQEXPR(self):
+
+        res = self.RELEXPR()
+
+        while self.token_tipo() == 'EQL':
+            
+            if self.token_tipo() == 'EQL':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not EQL')
+            
+        return res
+
+
+    def ANDEXPR(self):
+
+        res = self.EQEXPR()
+
+        while self.token_tipo() == 'AND':
+            
+            if self.token_tipo() == 'AND':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not AND')
+            
+        return res
+
+
+    def OREXPR(self):
+
+        res = self.ANDEXPR()
+
+        while self.token_tipo() == 'OR':
+            
+            if self.token_tipo() == 'OR':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not OR')
+            
+        return res
+
+
     def println(self):
         self.tokenizer.selectNext()
 
         if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no println')
 
-        tree = self.parseExpression()
+        tree = self.OREXPR()
 
         print(tree.evaluate())
 
@@ -99,7 +157,7 @@ class Parser:
 
         if self.token_tipo() != 'atrib' : raise ValueError(f'não tem = depois de variavel {cons_name}')
 
-        tree = self.parseExpression()
+        tree = self.OREXPR()
 
         self.cons_table[cons_name] = tree.evaluate()
 
