@@ -1,6 +1,10 @@
 import subprocess
 import pytest
+'''
+To fix:
 
+return de op booleanas esta byte, precisa retornar bool
+'''
 
 # test geral
 def test_geral():
@@ -60,5 +64,19 @@ def teste_input_igual_2():
                     println(z_final_); 
                 ''')
     assert int(subprocess.check_output("python3 main.py conta.c < input.txt", shell=True)) == 130
+
+
+def teste_eq():
+    with open('conta.c', 'w') as f:
+        f.write('''
+                    x = 8;
+                    y = 57;
+
+
+
+                    z = x == y;;;
+                    println(z); 
+                ''')
+    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'False\n'
 
 
