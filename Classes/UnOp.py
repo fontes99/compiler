@@ -9,3 +9,6 @@ class UnOp(Node):
 
             if self.value == 'SUB':
                 return -self.children[0].evaluate()
+
+            if self.value == 'NEG':
+                return not self.children[0].evaluate()

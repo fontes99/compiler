@@ -22,7 +22,7 @@ class Parser:
             self.tokenizer.selectNext()
             return tmp
 
-        elif self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB':
+        elif self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB' or self.token_tipo() == 'NEG':
             tmp = self.token_tipo()
             return UnOp(tmp, [self.parseFactor()]) 
 
@@ -97,7 +97,7 @@ class Parser:
 
         self.tokenizer.selectNext()
 
-        if self.token_tipo() != 'atrib' : raise ValueError('não tem = depois de variavel')
+        if self.token_tipo() != 'atrib' : raise ValueError(f'não tem = depois de variavel {cons_name}')
 
         tree = self.parseExpression()
 

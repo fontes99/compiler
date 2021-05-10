@@ -39,7 +39,31 @@ class Tokenizer:
         elif char() == '-':
             self.actual = Token('SUB', -1)
             next_()
-            
+        
+        elif char() == '>':
+            self.actual = Token('GRT', '>')
+            next_()
+                    
+        elif char() == '<':
+            self.actual = Token('LSS', '<')
+            next_()
+
+        elif char() == '!':
+            self.actual = Token('NEG', '!')
+            next_()
+
+        elif char() == '&':
+            next_()
+            if char() != '&' : raise ValueError("Syntax error: &&")
+            else: self.actual = Token('AND', '&&')
+            next_()
+
+        elif char() == '|':
+            next_()
+            if char() != '|' : raise ValueError("Syntax error: ||")
+            else: self.actual = Token('OR', '||')
+            next_()
+        
         elif char() == '(':
             self.actual = Token('OPN', '(')
             self.balance += 1
@@ -65,8 +89,12 @@ class Tokenizer:
             else : self.actual = Token('cons', name)
 
         elif char() == "=":
-            self.actual = Token('atrib', '=')
             next_()
+            if char() != "=":
+                self.actual = Token('atrib', '=')
+            else:
+                self.actual = Token('EQL', '==')
+                next_()
 
         elif char() == ";":
             
