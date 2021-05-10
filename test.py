@@ -2,6 +2,18 @@ import subprocess
 import pytest
 
 
+# test geral
+def test_geral():
+    with open('conta.c', 'w') as f:
+        f.write(''' 
+                    x /*asdasda*/ = 3;
+                    y = 4;
+                    z = x + y + 100;
+                    println(x + y /*asdasda*/ + z); 
+                ''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 114
+
+
 def test_soma_simples():
     with open('conta.c', 'w') as f:
         f.write('''
@@ -36,13 +48,17 @@ def teste_issue():
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == -481
 
 
-# test geral
-def test_geral():
+def teste_input_igual_2():
     with open('conta.c', 'w') as f:
-        f.write(''' 
-                    x /*asdasda*/ = 3;
-                    y = 4;
-                    z = x + y + 100;
-                    println(x + y /*asdasda*/ + z); 
+        f.write('''
+                    x_1 = 8;
+                    y = 57;
+
+
+
+                    z_final_ = (x_1 + y) * readln();;
+                    println(z_final_); 
                 ''')
-    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 114
+    assert int(subprocess.check_output("python3 main.py conta.c < input.txt", shell=True)) == 130
+
+

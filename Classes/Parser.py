@@ -44,7 +44,7 @@ class Parser:
             if self.token_tipo() != "OPN" : raise ValueError("sem ( depois de readln")
             self.tokenizer.selectNext()
             
-            tmp = IntVal(int(input("input: ")), [])
+            tmp = IntVal(int(input()), [])
             self.tokenizer.selectNext()
             return tmp
 
