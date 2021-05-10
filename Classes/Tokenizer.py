@@ -6,7 +6,8 @@ class Tokenizer:
         self.origin = origin
         self.position = position
         self.actual = actual
-        self.balance = 0
+        self.balance_paren = 0
+        self.balance_brace = 0
         self.builtIns = ["println", "readln"]
 
     def selectNext(self):
@@ -21,7 +22,7 @@ class Tokenizer:
 
         if self.position == len(self.origin):
             self.actual = Token('EOF', '"')
-            if self.balance != 0: raise ValueError
+            if self.balance_paren != 0: raise ValueError
             return
 
         elif char() == '/':
@@ -66,15 +67,28 @@ class Tokenizer:
         
         elif char() == '(':
             self.actual = Token('OPN', '(')
-            self.balance += 1
+            self.balance_paren += 1
             next_()
 
         elif char() == ')':
             self.actual = Token('CLS', ')')
-            self.balance -= 1
+            self.balance_paren -= 1
             next_()
 
-            if self.balance < 0:
+            if self.balance_paren < 0:
+                raise ValueError
+
+        elif char() == '{':
+            self.actual = Token('BEG', '{')
+            self.balance_brace += 1
+            next_()
+
+        elif char() == '}':
+            self.actual = Token('END', '}')
+            self.balance_brace -= 1
+            next_()
+
+            if self.balance_brace < 0:
                 raise ValueError
 
         elif char().isalpha():
@@ -98,7 +112,7 @@ class Tokenizer:
 
         elif char() == ";":
             
-            if self.balance != 0:
+            if self.balance_paren != 0:
                 raise ValueError("parenteses desbalanceados na linha")
             
             self.actual = Token('end_line', ";")

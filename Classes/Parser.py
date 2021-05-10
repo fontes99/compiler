@@ -148,7 +148,7 @@ class Parser:
 
         self.tokenizer.selectNext()
 
-    def cons(self):
+    def identifier(self):
         cons_name = self.token_valor()
 
         self.tokenizer.selectNext()
@@ -168,13 +168,12 @@ class Parser:
                 self.println()
 
         elif self.token_tipo() == 'cons':
-            self.cons()
+            self.identifier()
 
         elif self.token_tipo() == 'end_line':
             pass
 
         else : raise ValueError("Syntax error :(")
-
 
 
     def run(self, code):
