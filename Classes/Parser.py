@@ -61,7 +61,7 @@ class Parser:
             if self.token_tipo() == 'DIV' or self.token_tipo() == 'MULT':
                 res = BinOp(self.token_tipo(), [res, self.parseFactor()])
             
-            else: raise ValueError('b')
+            else: raise ValueError('not DIV or MULT')
             
         return res
 
@@ -76,7 +76,7 @@ class Parser:
             if self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB':
                 res = BinOp(self.token_tipo(), [res, self.parseTerm()])
 
-            else: raise ValueError('c')
+            else: raise ValueError('not SUM or SUB')
             
         return res
 
