@@ -22,7 +22,8 @@ class Tokenizer:
 
         if self.position == len(self.origin):
             self.actual = Token('EOF', '"')
-            if self.balance_paren != 0: raise ValueError
+            if self.balance_paren != 0: raise ValueError("parenteses desbalanceados")
+            if self.balance_brace != 0: raise ValueError("chaves desbalanceadas")
             return
 
         elif char() == '/':

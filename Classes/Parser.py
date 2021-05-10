@@ -164,7 +164,6 @@ class Parser:
         if self.token_tipo() == 'builtin':
 
             if self.token_valor() == 'println':
-
                 self.println()
 
         elif self.token_tipo() == 'cons':
