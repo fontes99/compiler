@@ -28,12 +28,10 @@ class Parser:
 
         elif self.token_tipo() == 'OPN':
 
-            tmp = self.parseExpression()
+            tmp = self.OREXPR()
             self.tokenizer.selectNext()
             
             return tmp
-
-        # OREXPR
 
         elif self.token_tipo() == 'cons':
             tmp = IntVal(self.cons_table[self.token_valor()], [])
