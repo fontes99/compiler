@@ -168,6 +168,12 @@ class Parser:
                 if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
                 self.tokenizer.selectNext()
 
+            elif self.token_valor() == 'if':
+                pass
+
+            elif self.token_valor() == 'while':
+                pass
+
         elif self.token_tipo() == 'cons':
             self.identifier()
             if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
