@@ -80,3 +80,17 @@ def teste_eq():
     assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'False\n'
 
 
+def teste_block():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                        {
+                            x = 8;
+                            y = 57;
+                        }
+
+                    z = x * y;;;
+                    println(z); 
+                }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 456
+
+
