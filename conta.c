@@ -1,9 +1,9 @@
 {
-                        {
-                            x = 8;
-                            y = 57;
-                        }
+    x = 3;
+    y = 6;
+    y = y + 1;
 
-                    z = x * y;;;
-                    println(z); 
-                }
+    if (x+y < 10) 
+        println(1); 
+    println(0);
+}

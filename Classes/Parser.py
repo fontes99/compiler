@@ -164,24 +164,22 @@ class Parser:
 
         return BinOp('atrib', [str(cons_name), tree])
 
-    # def ifEXPR(self):
-    #     self.tokenizer.selectNext()
-    #     if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no if')
+    def ifEXPR(self):
+        self.tokenizer.selectNext()
+        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no if')
 
-    #     condition = self.OREXPR()
-    #     self.tokenizer.selectNext()
+        condition = self.OREXPR()
+        self.tokenizer.selectNext()
 
-    #     iftrue = self.command()
-    #     print(self.token_tipo())
+        iftrue = self.command()
         
-    #     elsee = self.command()
-    #     print(self.token_tipo())
+        elsee = self.command()
+        
+        return TriOp('if', [condition, iftrue, elsee])
 
-    #     return TriOp(self.token_valor(), [condition, iftrue, elsee])
-
-    # def whileEXPR(self):
-    #     self.tokenizer.selectNext()
-    #     if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
+    def whileEXPR(self):
+        self.tokenizer.selectNext()
+        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
 
 
     def command(self):
@@ -196,12 +194,11 @@ class Parser:
                 
                 return tree
 
-            # elif self.token_valor() == 'if':
-            #     tree = self.ifEXPR()
-            #     tree.evaluate()
+            elif self.token_valor() == 'if':
+                return self.ifEXPR()
 
-            # elif self.token_valor() == 'while':
-            #     pass
+            elif self.token_valor() == 'while':
+                pass
 
         elif self.token_tipo() == 'cons':
             tree = self.identifier()
