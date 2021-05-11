@@ -1,4 +1,5 @@
 from .Node import Node
+from .ConsTable import consTable
 
 class BinOp(Node):
 
@@ -30,6 +31,9 @@ class BinOp(Node):
 
         if self.value == 'LSS':
             return self.children[0].evaluate() < self.children[1].evaluate()
+
+        if self.value == 'atrib':
+            consTable.setCons(self.children[0], self.children[1].evaluate())
 
         if self.value == 'while':
             while  self.children[0].evaluate():

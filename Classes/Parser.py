@@ -1,18 +1,23 @@
 from .Tokenizer import Tokenizer
 from .Token import Token
+from .TriOp import TriOp
 from .BinOp import BinOp
+from .VarOp import VarOp
+from .BigOp import BigOp
 from .UnOp import UnOp
 from .IntVal import IntVal
 from .NoOp import NoOp
+from .ConsTable import consTable
 
 class Parser:
 
-
     def __init__(self):
         self.tokenizer = None
-        self.cons_table = {}
         self.token_tipo = lambda : self.tokenizer.actual.tipo
         self.token_valor = lambda : self.tokenizer.actual.value
+        self.commands_in_block = []
+
+
 
     def parseFactor(self):
         self.tokenizer.selectNext()
@@ -34,7 +39,7 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == 'cons':
-            tmp = IntVal(self.cons_table[self.token_valor()], [])
+            tmp = VarOp(self.token_valor(), [])
             self.tokenizer.selectNext()
             return tmp
 
@@ -138,15 +143,15 @@ class Parser:
 
 
     def println(self):
+        print_valor = self.token_valor()
         self.tokenizer.selectNext()
 
         if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no println')
 
         tree = self.OREXPR()
-
-        print(tree.evaluate())
-
         self.tokenizer.selectNext()
+
+        return UnOp(print_valor, [tree])
 
     def identifier(self):
         cons_name = self.token_valor()
@@ -157,33 +162,62 @@ class Parser:
 
         tree = self.OREXPR()
 
-        self.cons_table[cons_name] = tree.evaluate()
+        return BinOp('atrib', [str(cons_name), tree])
+
+    # def ifEXPR(self):
+    #     self.tokenizer.selectNext()
+    #     if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no if')
+
+    #     condition = self.OREXPR()
+    #     self.tokenizer.selectNext()
+
+    #     iftrue = self.command()
+    #     print(self.token_tipo())
+        
+    #     elsee = self.command()
+    #     print(self.token_tipo())
+
+    #     return TriOp(self.token_valor(), [condition, iftrue, elsee])
+
+    # def whileEXPR(self):
+    #     self.tokenizer.selectNext()
+    #     if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
+
 
     def command(self):
 
         if self.token_tipo() == 'builtin':
 
             if self.token_valor() == 'println':
-                self.println()
+                tree = self.println()
+                
                 if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
                 self.tokenizer.selectNext()
+                
+                return tree
 
-            elif self.token_valor() == 'if':
-                pass
+            # elif self.token_valor() == 'if':
+            #     tree = self.ifEXPR()
+            #     tree.evaluate()
 
-            elif self.token_valor() == 'while':
-                pass
+            # elif self.token_valor() == 'while':
+            #     pass
 
         elif self.token_tipo() == 'cons':
-            self.identifier()
+            tree = self.identifier()
+
             if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
             self.tokenizer.selectNext()
+           
+            return tree
 
         elif self.token_tipo() == 'end_line':
             self.tokenizer.selectNext()
+            return NoOp('pass', [])
 
         elif self.token_tipo() == 'BEG':
             self.block()
+            return NoOp('pass', [])
 
         else : raise ValueError("Syntax error :(")
 
@@ -193,15 +227,16 @@ class Parser:
         self.tokenizer.selectNext()
 
         while self.token_tipo() != 'END':
-            self.command()
-
+            self.commands_in_block.append(self.command())
+        
         self.tokenizer.selectNext()
+        return BigOp('block', self.commands_in_block)
 
 
     def run(self, code):
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
         self.tokenizer.selectNext()
 
-        while self.token_tipo() != 'EOF':
-            self.block()
-            
+        compiled = self.block()
+        compiled.evaluate()
+
