@@ -96,11 +96,40 @@ def teste_block():
 def teste_if():
     with open('conta.c', 'w') as f:
         f.write('''{
-                        x = 3;
-                        y = 6;
+                    x = 3;
+                    y = 6;
 
-                        if (x+y < 10) 
-                            println(1); 
-                        println(0);
-                    }''')
+                    if (x+y < 10) 
+                        println(1); 
+                    println(0);
+                }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 1
+
+def teste_if_else():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    x = 3;
+                    y = 7;
+
+                    if (x+y < 10) {
+                        println(1); 
+                    } else {
+                        println(0);
+                    }
+                }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 0
+
+def teste_if_else():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    x = 3;
+                    y = 7;
+
+                    if (x+y < 10) {
+                        println(1); 
+                    } 
+                
+                    println(0);
+                
+                }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 0

@@ -1,8 +1,5 @@
 {
-                        x = 3;
-                        y = 6;
-
-                        if (x+y < 10) 
-                            println(1); 
-                        println(0);
-                    }
+    x = 0;
+    while ( x < 10 ) x = x + 1;
+    println(x);
+}
