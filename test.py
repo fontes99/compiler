@@ -93,4 +93,14 @@ def teste_block():
                 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 456
 
+def teste_if():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                        x = 3;
+                        y = 6;
 
+                        if (x+y < 10) 
+                            println(1); 
+                        println(0);
+                    }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 1

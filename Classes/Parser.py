@@ -15,8 +15,6 @@ class Parser:
         self.tokenizer = None
         self.token_tipo = lambda : self.tokenizer.actual.tipo
         self.token_valor = lambda : self.tokenizer.actual.value
-        self.commands_in_block = []
-
 
 
     def parseFactor(self):
@@ -173,7 +171,12 @@ class Parser:
 
         iftrue = self.command()
         
-        elsee = self.command()
+        if self.token_valor() == 'else':
+            self.tokenizer.selectNext()
+            elsee = self.command()
+
+        else: 
+            elsee = self.command()
         
         return TriOp('if', [condition, iftrue, elsee])
 
@@ -181,6 +184,14 @@ class Parser:
         self.tokenizer.selectNext()
         if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
 
+        condition = self.OREXPR()
+        print(condition)
+        self.tokenizer.selectNext()
+
+        instru = self.command()
+
+        return BinOp('while', [condition, instru])
+        
 
     def command(self):
 
@@ -213,8 +224,7 @@ class Parser:
             return NoOp('pass', [])
 
         elif self.token_tipo() == 'BEG':
-            self.block()
-            return NoOp('pass', [])
+            return self.block()
 
         else : raise ValueError("Syntax error :(")
 
@@ -223,11 +233,13 @@ class Parser:
         if self.token_tipo() != 'BEG' : raise ValueError('bloco não começa com {')
         self.tokenizer.selectNext()
 
+        commands_in_block = []
+
         while self.token_tipo() != 'END':
-            self.commands_in_block.append(self.command())
+            commands_in_block.append(self.command())
         
         self.tokenizer.selectNext()
-        return BigOp('block', self.commands_in_block)
+        return BigOp('block', commands_in_block)
 
 
     def run(self, code):

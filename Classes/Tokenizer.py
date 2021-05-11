@@ -8,7 +8,7 @@ class Tokenizer:
         self.actual = actual
         self.balance_paren = 0
         self.balance_brace = 0
-        self.builtIns = ["println", "readln", "if", "while"]
+        self.builtIns = ["println", "readln", "if", "while", "else"]
 
     def selectNext(self):
         
