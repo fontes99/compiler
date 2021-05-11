@@ -165,14 +165,31 @@ class Parser:
 
             if self.token_valor() == 'println':
                 self.println()
+                if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+                self.tokenizer.selectNext()
 
         elif self.token_tipo() == 'cons':
             self.identifier()
+            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+            self.tokenizer.selectNext()
 
         elif self.token_tipo() == 'end_line':
-            pass
+            self.tokenizer.selectNext()
+
+        elif self.token_tipo() == 'BEG':
+            self.block()
 
         else : raise ValueError("Syntax error :(")
+
+
+    def block(self):
+        if self.token_tipo() != 'BEG' : raise ValueError('bloco não começa com {')
+        self.tokenizer.selectNext()
+
+        while self.token_tipo() != 'END':
+            self.command()
+
+        self.tokenizer.selectNext()
 
 
     def run(self, code):
@@ -180,6 +197,5 @@ class Parser:
         self.tokenizer.selectNext()
 
         while self.token_tipo() != 'EOF':
-            self.command()
-            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
-            self.tokenizer.selectNext()
+            self.block()
+            

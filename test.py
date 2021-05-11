@@ -9,38 +9,38 @@ return de op booleanas esta byte, precisa retornar bool
 # test geral
 def test_geral():
     with open('conta.c', 'w') as f:
-        f.write(''' 
+        f.write('''{ 
                     x /*asdasda*/ = 3;
                     y = 4;
                     z = x + y + 100;
                     println(x + y /*asdasda*/ + z); 
-                ''')
+                }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 114
 
 
 def test_soma_simples():
     with open('conta.c', 'w') as f:
-        f.write('''
+        f.write('''{
                     x = 3;
                     println(x); 
-                ''')
+                }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 3
 
 
 def test_soma_varias():
     with open('conta.c', 'w') as f:
-        f.write('''
+        f.write('''{
                     x = 3;
                     y = 5;
                     z = 3 + 5;
                     println(z); 
-                ''')
+                }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 8
 
 
 def teste_issue():
     with open('conta.c', 'w') as f:
-        f.write('''
+        f.write('''{
                     x1 = 8;
                     y2 = 5;
 
@@ -48,13 +48,13 @@ def teste_issue():
 
                     z_final = (x1 + y2) * ---37;;
                     println(z_final); 
-                ''')
+                }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == -481
 
 
 def teste_input_igual_2():
     with open('conta.c', 'w') as f:
-        f.write('''
+        f.write('''{
                     x_1 = 8;
                     y = 57;
 
@@ -62,13 +62,13 @@ def teste_input_igual_2():
 
                     z_final_ = (x_1 + y) * readln();;
                     println(z_final_); 
-                ''')
+                }''')
     assert int(subprocess.check_output("python3 main.py conta.c < input.txt", shell=True)) == 130
 
 
 def teste_eq():
     with open('conta.c', 'w') as f:
-        f.write('''
+        f.write('''{
                     x = 8;
                     y = 57;
 
@@ -76,7 +76,7 @@ def teste_eq():
 
                     z = x == y;;;
                     println(z); 
-                ''')
+                }''')
     assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'False\n'
 
 
