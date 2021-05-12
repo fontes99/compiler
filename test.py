@@ -165,4 +165,18 @@ def teste_if_elseif_else():
                 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 2
 
+def teste_while():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    x = 0;
+
+                    while (x < 10) {
+                        x = x + 1;
+                    }
+
+                    println(x);
+
+                }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 10
+
     
