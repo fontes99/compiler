@@ -1,18 +1,21 @@
 from .Tokenizer import Tokenizer
 from .Token import Token
+from .TriOp import TriOp
 from .BinOp import BinOp
+from .VarOp import VarOp
+from .BigOp import BigOp
 from .UnOp import UnOp
 from .IntVal import IntVal
 from .NoOp import NoOp
+from .ConsTable import consTable
 
 class Parser:
 
-
     def __init__(self):
         self.tokenizer = None
-        self.cons_table = {}
         self.token_tipo = lambda : self.tokenizer.actual.tipo
         self.token_valor = lambda : self.tokenizer.actual.value
+
 
     def parseFactor(self):
         self.tokenizer.selectNext()
@@ -22,19 +25,29 @@ class Parser:
             self.tokenizer.selectNext()
             return tmp
 
-        elif self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB':
+        elif self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB' or self.token_tipo() == 'NEG':
             tmp = self.token_tipo()
             return UnOp(tmp, [self.parseFactor()]) 
 
         elif self.token_tipo() == 'OPN':
 
-            tmp = self.parseExpression()
+            tmp = self.OREXPR()
             self.tokenizer.selectNext()
             
             return tmp
 
         elif self.token_tipo() == 'cons':
-            tmp = IntVal(self.cons_table[self.token_valor()], [])
+            tmp = VarOp(self.token_valor(), [])
+            self.tokenizer.selectNext()
+            return tmp
+
+        elif self.token_valor() == "readln":
+            self.tokenizer.selectNext()
+
+            if self.token_tipo() != "OPN" : raise ValueError("sem ( depois de readln")
+            self.tokenizer.selectNext()
+            
+            tmp = IntVal(int(input()), [])
             self.tokenizer.selectNext()
             return tmp
 
@@ -51,7 +64,7 @@ class Parser:
             if self.token_tipo() == 'DIV' or self.token_tipo() == 'MULT':
                 res = BinOp(self.token_tipo(), [res, self.parseFactor()])
             
-            else: raise ValueError('b')
+            else: raise ValueError('not DIV or MULT')
             
         return res
 
@@ -66,56 +79,175 @@ class Parser:
             if self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB':
                 res = BinOp(self.token_tipo(), [res, self.parseTerm()])
 
-            else: raise ValueError('c')
+            else: raise ValueError('not SUM or SUB')
+            
+        return res
+
+
+    def RELEXPR(self):
+
+        res = self.parseExpression()
+
+        while self.token_tipo() == 'GRT' or self.token_tipo() == 'LSS':
+            
+            if self.token_tipo() == 'GRT' or self.token_tipo() == 'LSS':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not GRT or LSS')
+            
+        return res
+
+
+    def EQEXPR(self):
+
+        res = self.RELEXPR()
+
+        while self.token_tipo() == 'EQL':
+            
+            if self.token_tipo() == 'EQL':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not EQL')
+            
+        return res
+
+
+    def ANDEXPR(self):
+
+        res = self.EQEXPR()
+
+        while self.token_tipo() == 'AND':
+            
+            if self.token_tipo() == 'AND':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not AND')
+            
+        return res
+
+
+    def OREXPR(self):
+
+        res = self.ANDEXPR()
+
+        while self.token_tipo() == 'OR':
+            
+            if self.token_tipo() == 'OR':
+                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+
+            else: raise ValueError('not OR')
             
         return res
 
 
     def println(self):
+        print_valor = self.token_valor()
         self.tokenizer.selectNext()
 
         if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no println')
 
-        tree = self.parseExpression()
+        tree = self.OREXPR()
+        self.tokenizer.selectNext()
 
-        print(tree.evaluate())
+        return UnOp(print_valor, [tree])
+
+    def identifier(self):
+        cons_name = self.token_valor()
 
         self.tokenizer.selectNext()
 
-    def cons(self):
-        algumacoisa = self.token_valor()
+        if self.token_tipo() != 'atrib' : raise ValueError(f'não tem = depois de variavel {cons_name}')
 
+        tree = self.OREXPR()
+
+        return BinOp('atrib', [str(cons_name), tree])
+
+    def ifEXPR(self):
+        self.tokenizer.selectNext()
+        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no if')
+
+        condition = self.OREXPR()
         self.tokenizer.selectNext()
 
-        if self.token_tipo() != 'atrib' : raise ValueError('não tem = depois de variavel')
+        iftrue = self.command()
 
-        tree = self.parseExpression()
+        if self.token_valor() == 'else':
+            self.tokenizer.selectNext()
+            elsee = self.command()
 
-        self.cons_table[algumacoisa] = tree.evaluate()
+        elif self.token_tipo() == 'END':
+            elsee = NoOp('nop', [])
+
+        else: 
+            elsee = self.command()
+        
+        return TriOp('if', [condition, iftrue, elsee])
+
+    def whileEXPR(self):
+        self.tokenizer.selectNext()
+        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
+
+        condition = self.OREXPR()
+        self.tokenizer.selectNext()
+
+        instru = self.command()
+
+        return BinOp('while', [condition, instru])
+        
 
     def command(self):
 
         if self.token_tipo() == 'builtin':
 
             if self.token_valor() == 'println':
+                tree = self.println()
+                
+                if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+                self.tokenizer.selectNext()
+                
+                return tree
 
-                self.println()
+            elif self.token_valor() == 'if':
+                return self.ifEXPR()
+
+            elif self.token_valor() == 'while':
+                return self.whileEXPR()
 
         elif self.token_tipo() == 'cons':
-            self.cons()
+            tree = self.identifier()
+
+            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+            self.tokenizer.selectNext()
+           
+            return tree
 
         elif self.token_tipo() == 'end_line':
-            pass
+            self.tokenizer.selectNext()
+            return NoOp('pass', [])
 
-        else : raise ValueError("Syntax error :(")
+        elif self.token_tipo() == 'BEG':
+            return self.block()
+        
+        else : raise ValueError(f"Syntax error : {self.token_tipo()} token {self.tokenizer.tokenPosition}")
 
+
+    def block(self):
+        if self.token_tipo() != 'BEG' : raise ValueError('bloco não começa com {')
+        self.tokenizer.selectNext()
+
+        commands_in_block = []
+
+        while self.token_tipo() != 'END':
+            commands_in_block.append(self.command())
+        
+        self.tokenizer.selectNext()
+        return BigOp('block', commands_in_block)
 
 
     def run(self, code):
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
         self.tokenizer.selectNext()
 
-        while self.token_tipo() != 'EOF':
-            self.command()
-            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
-            self.tokenizer.selectNext()
+        compiled = self.block()
+        compiled.evaluate()
+

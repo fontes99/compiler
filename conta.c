@@ -1,6 +1,10 @@
- 
-                    x /*asdasda*/ = 3;
-                    y = 4;
-                    z = x + y + 100;
-                    println(x + y /*asdasda*/ + z); 
-                
+{
+                    x = 0;
+
+                    while (x < 10) {
+                        x = x + 1;
+                    }
+
+                    println(x);
+
+                }

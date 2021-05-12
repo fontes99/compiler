@@ -6,10 +6,14 @@ class Tokenizer:
         self.origin = origin
         self.position = position
         self.actual = actual
-        self.balance = 0
-        self.builtIns = ["println"]
+        self.balance_paren = 0
+        self.balance_brace = 0
+        self.builtIns = ["println", "readln", "if", "while", "else"]
+        self.tokenPosition = 0
 
     def selectNext(self):
+
+        self.tokenPosition += 1
         
         def next_():
             self.position += 1
@@ -21,7 +25,8 @@ class Tokenizer:
 
         if self.position == len(self.origin):
             self.actual = Token('EOF', '"')
-            if self.balance != 0: raise ValueError
+            if self.balance_paren != 0: raise ValueError("parenteses desbalanceados")
+            if self.balance_brace != 0: raise ValueError("chaves desbalanceadas")
             return
 
         elif char() == '/':
@@ -39,18 +44,55 @@ class Tokenizer:
         elif char() == '-':
             self.actual = Token('SUB', -1)
             next_()
-            
+        
+        elif char() == '>':
+            self.actual = Token('GRT', '>')
+            next_()
+                    
+        elif char() == '<':
+            self.actual = Token('LSS', '<')
+            next_()
+
+        elif char() == '!':
+            self.actual = Token('NEG', '!')
+            next_()
+
+        elif char() == '&':
+            next_()
+            if char() != '&' : raise ValueError("Syntax error: &&")
+            else: self.actual = Token('AND', '&&')
+            next_()
+
+        elif char() == '|':
+            next_()
+            if char() != '|' : raise ValueError("Syntax error: ||")
+            else: self.actual = Token('OR', '||')
+            next_()
+        
         elif char() == '(':
             self.actual = Token('OPN', '(')
-            self.balance += 1
+            self.balance_paren += 1
             next_()
 
         elif char() == ')':
             self.actual = Token('CLS', ')')
-            self.balance -= 1
+            self.balance_paren -= 1
             next_()
 
-            if self.balance < 0:
+            if self.balance_paren < 0:
+                raise ValueError
+
+        elif char() == '{':
+            self.actual = Token('BEG', '{')
+            self.balance_brace += 1
+            next_()
+
+        elif char() == '}':
+            self.actual = Token('END', '}')
+            self.balance_brace -= 1
+            next_()
+
+            if self.balance_brace < 0:
                 raise ValueError
 
         elif char().isalpha():
@@ -65,12 +107,16 @@ class Tokenizer:
             else : self.actual = Token('cons', name)
 
         elif char() == "=":
-            self.actual = Token('atrib', '=')
             next_()
+            if char() != "=":
+                self.actual = Token('atrib', '=')
+            else:
+                self.actual = Token('EQL', '==')
+                next_()
 
         elif char() == ";":
             
-            if self.balance != 0:
+            if self.balance_paren != 0:
                 raise ValueError("parenteses desbalanceados na linha")
             
             self.actual = Token('end_line', ";")
