@@ -119,7 +119,7 @@ def teste_if_else():
                 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 0
 
-def teste_if_else():
+def teste_if_alone():
     with open('conta.c', 'w') as f:
         f.write('''{
                     x = 3;
@@ -133,3 +133,36 @@ def teste_if_else():
                 
                 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 0
+
+def teste_if_elseif():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    x = 3;
+                    y = 7;
+
+                    if (x+y < 10) {
+                        println(1); 
+                    } else if (x == 3) {
+                        println(0);
+                    }
+                }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 0
+
+def teste_if_elseif_else():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    x = 3;
+                    y = 7;
+
+                    if (x+y < 10) {
+                        println(0); 
+                    } else if (x == 2) {
+                        println(1);
+                    } else {
+                        println(2);
+                    }
+
+                }''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 2
+
+    

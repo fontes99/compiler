@@ -14,6 +14,6 @@ parser.tokenizer = Tokenizer(prepro.filter(expression), 0, Token('INIT', '-'))
 parser.tokenizer.selectNext()
 
 while parser.tokenizer.actual.tipo != "EOF":
-    print(parser.tokenizer.actual.tipo, parser.tokenizer.actual.value)
+    print(parser.tokenizer.tokenPosition, parser.tokenizer.actual.tipo, parser.tokenizer.actual.value)
     # print(parser.tokenizer.position, len(parser.tokenizer.origin))
     parser.tokenizer.selectNext()

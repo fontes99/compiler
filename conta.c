@@ -1,10 +1,13 @@
 {
-    x = 0;
-    println(x);
+                    x = 3;
+                    y = 7;
 
-    while ( x < 10 ) 
-        x = x + 1;
-    
-    
-    println(x);
-}
+                    if (x+y < 10) {
+                        println(0); 
+                    } else if (x == 2) {
+                        println(1);
+                    } else {
+                        println(2);
+                    }
+
+                }

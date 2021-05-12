@@ -9,8 +9,11 @@ class Tokenizer:
         self.balance_paren = 0
         self.balance_brace = 0
         self.builtIns = ["println", "readln", "if", "while", "else"]
+        self.tokenPosition = 0
 
     def selectNext(self):
+
+        self.tokenPosition += 1
         
         def next_():
             self.position += 1

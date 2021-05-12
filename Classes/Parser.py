@@ -170,10 +170,13 @@ class Parser:
         self.tokenizer.selectNext()
 
         iftrue = self.command()
-        
+
         if self.token_valor() == 'else':
             self.tokenizer.selectNext()
             elsee = self.command()
+
+        elif self.token_tipo() == 'END':
+            elsee = NoOp('nop', [])
 
         else: 
             elsee = self.command()
@@ -224,8 +227,8 @@ class Parser:
 
         elif self.token_tipo() == 'BEG':
             return self.block()
-
-        else : raise ValueError("Syntax error :(")
+        
+        else : raise ValueError(f"Syntax error : {self.token_tipo()} token {self.tokenizer.tokenPosition}")
 
 
     def block(self):
