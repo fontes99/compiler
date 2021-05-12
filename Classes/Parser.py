@@ -185,7 +185,6 @@ class Parser:
         if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
 
         condition = self.OREXPR()
-        print(condition)
         self.tokenizer.selectNext()
 
         instru = self.command()
@@ -209,7 +208,7 @@ class Parser:
                 return self.ifEXPR()
 
             elif self.token_valor() == 'while':
-                pass
+                return self.whileEXPR()
 
         elif self.token_tipo() == 'cons':
             tree = self.identifier()
