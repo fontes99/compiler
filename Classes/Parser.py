@@ -213,6 +213,8 @@ class Parser:
             elif self.token_valor() == 'while':
                 return self.whileEXPR()
 
+            else : raise ValueError("builton not valid")
+
         elif self.token_tipo() == 'cons':
             tree = self.identifier()
 
