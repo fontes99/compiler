@@ -1,11 +1,9 @@
 {
-                    int x;
-                    x = 0;
+    bool x;
+    int y;
 
-                    while (x < 10) {
-                        x = x + 1;
-                    }
-
-                    println(x);
-
-                }
+    y = 3;
+    x = 1 < 0;
+    
+    println(x + y); 
+}
