@@ -17,15 +17,12 @@ class ConsTable:
         try:
             self.table[cons]['value'] = value
         except:
-            self.setCons(cons)
-            self.table[cons]['value'] = value
+            raise ValueError("Const not assigned")
+        
     
     def setConsType(self, cons, tipo):
-        try:
-            self.table[cons]['type'] = tipo
-        except:
-            self.setCons(cons)
-            self.table[cons]['type'] = tipo
+        self.setCons(cons)
+        self.table[cons]['type'] = tipo
 
     def getTable(self):
         return self.table
