@@ -22,7 +22,7 @@ class ConsTable:
         try:
             self.table[cons]['value'] = value
         except:
-            raise ValueError("Const not assigned")
+            raise ValueError(f"Constant {cons} not assigned")
     
     def setConsType(self, cons, tipo):
         self.setCons(cons)

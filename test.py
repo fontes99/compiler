@@ -90,7 +90,7 @@ def teste_eq():
 
                     int x;
                     int y;
-                    int z;
+                    bool z;
 
                     x = 8;
                     y = 57;
