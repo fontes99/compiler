@@ -1,10 +1,5 @@
 {
-                    x = 0;
-
-                    while (x < 10) {
-                        x = x + 1;
-                    }
-
+                    bool x;
+                    x = 1 > 0;
                     println(x);
-
                 }

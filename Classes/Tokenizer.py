@@ -9,6 +9,7 @@ class Tokenizer:
         self.balance_paren = 0
         self.balance_brace = 0
         self.builtIns = ["println", "readln", "if", "while", "else"]
+        self.types = ["int", "bool", "string"]
         self.tokenPosition = 0
 
     def selectNext(self):
@@ -103,6 +104,8 @@ class Tokenizer:
                 next_()
 
             if name in self.builtIns: self.actual = Token('builtin', name)
+            
+            elif name in self.types: self.actual = Token('TYP', name)
 
             else : self.actual = Token('cons', name)
 
@@ -120,6 +123,18 @@ class Tokenizer:
                 raise ValueError("parenteses desbalanceados na linha")
             
             self.actual = Token('end_line', ";")
+            next_()
+
+        elif char() == '"':
+            string = char()
+            next_()
+
+            while char() != '"':
+                string += char()
+                next_()
+
+            string += char()
+            self.actual = Token("STR", string)
             next_()
 
         else: 

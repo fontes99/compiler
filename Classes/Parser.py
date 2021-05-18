@@ -4,10 +4,11 @@ from .TriOp import TriOp
 from .BinOp import BinOp
 from .VarOp import VarOp
 from .BigOp import BigOp
+from .TypeOp import TypeOp
 from .UnOp import UnOp
 from .IntVal import IntVal
+from .StringVal import StringVal
 from .NoOp import NoOp
-from .ConsTable import consTable
 
 class Parser:
 
@@ -22,6 +23,11 @@ class Parser:
 
         if self.token_tipo() == 'INT':
             tmp = IntVal(self.token_valor(), [])
+            self.tokenizer.selectNext()
+            return tmp
+
+        elif self.token_tipo() == 'STR':
+            tmp = StringVal(self.token_valor(), [])
             self.tokenizer.selectNext()
             return tmp
 
@@ -162,6 +168,14 @@ class Parser:
 
         return BinOp('atrib', [str(cons_name), tree])
 
+    def Typing(self):
+        tmp = self.token_valor()
+
+        self.tokenizer.selectNext()
+        if self.token_tipo() != 'cons' : raise ValueError(f"Invalid constant name {self.token_valor()}")
+
+        return TypeOp(tmp, [self.token_valor()])
+
     def ifEXPR(self):
         self.tokenizer.selectNext()
         if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no if')
@@ -218,6 +232,15 @@ class Parser:
         elif self.token_tipo() == 'cons':
             tree = self.identifier()
 
+            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+            self.tokenizer.selectNext()
+           
+            return tree
+
+        elif self.token_tipo() == 'TYP':
+            tree = self.Typing()
+
+            self.tokenizer.selectNext()
             if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
             self.tokenizer.selectNext()
            

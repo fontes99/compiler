@@ -9,7 +9,10 @@ return de op booleanas esta byte, precisa retornar bool
 # test geral
 def test_geral():
     with open('conta.c', 'w') as f:
-        f.write('''{ 
+        f.write('''{
+                    int x;
+                    int y;
+                    int z; 
                     x /*asdasda*/ = 3;
                     y = 4;
                     z = x + y + 100;
@@ -21,6 +24,7 @@ def test_geral():
 def test_soma_simples():
     with open('conta.c', 'w') as f:
         f.write('''{
+                    int x;
                     x = 3;
                     println(x); 
                 }''')
@@ -30,6 +34,10 @@ def test_soma_simples():
 def test_soma_varias():
     with open('conta.c', 'w') as f:
         f.write('''{
+                    int x;
+                    int y;
+                    int z;
+
                     x = 3;
                     y = 5;
                     z = 3 + 5;
@@ -41,6 +49,11 @@ def test_soma_varias():
 def teste_issue():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                    int x1;
+                    int y2;
+                    int z_final;
+
                     x1 = 8;
                     y2 = 5;
 
@@ -55,6 +68,11 @@ def teste_issue():
 def teste_input_igual_2():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                    int x_1;
+                    int y;
+                    int z_final_;
+
                     x_1 = 8;
                     y = 57;
 
@@ -69,6 +87,11 @@ def teste_input_igual_2():
 def teste_eq():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                    int x;
+                    int y;
+                    bool z;
+
                     x = 8;
                     y = 57;
 
@@ -83,6 +106,11 @@ def teste_eq():
 def teste_block():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                        int x; 
+                        int y;
+                        int z;
+
                         {
                             x = 8;
                             y = 57;
@@ -96,6 +124,9 @@ def teste_block():
 def teste_if():
     with open('conta.c', 'w') as f:
         f.write('''{
+                    int x;
+                    int y;
+
                     x = 3;
                     y = 6;
 
@@ -108,6 +139,9 @@ def teste_if():
 def teste_if_else():
     with open('conta.c', 'w') as f:
         f.write('''{
+                    int x;
+                    int y;
+
                     x = 3;
                     y = 7;
 
@@ -122,6 +156,10 @@ def teste_if_else():
 def teste_if_alone():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                    int x;
+                    int y;
+
                     x = 3;
                     y = 7;
 
@@ -137,6 +175,10 @@ def teste_if_alone():
 def teste_if_elseif():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                    int x;
+                    int y;
+
                     x = 3;
                     y = 7;
 
@@ -151,6 +193,10 @@ def teste_if_elseif():
 def teste_if_elseif_else():
     with open('conta.c', 'w') as f:
         f.write('''{
+
+                    int x;
+                    int y;
+
                     x = 3;
                     y = 7;
 
@@ -168,6 +214,7 @@ def teste_if_elseif_else():
 def teste_while():
     with open('conta.c', 'w') as f:
         f.write('''{
+                    int x;
                     x = 0;
 
                     while (x < 10) {
@@ -178,5 +225,23 @@ def teste_while():
 
                 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 10
+
+def teste_string():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    string x;
+                    x = "oi";
+                    println(x);
+                }''')
+    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'"oi"\n'
+
+def teste_string():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    bool x;
+                    x = 1 > 0;
+                    println(x);
+                }''')
+    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'True\n'
 
     
