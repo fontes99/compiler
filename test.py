@@ -226,4 +226,22 @@ def teste_while():
                 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 10
 
+def teste_string():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    string x;
+                    x = "oi";
+                    println(x);
+                }''')
+    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'"oi"\n'
+
+def teste_string():
+    with open('conta.c', 'w') as f:
+        f.write('''{
+                    bool x;
+                    x = 1 > 0;
+                    println(x);
+                }''')
+    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'True\n'
+
     
