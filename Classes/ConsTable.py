@@ -16,7 +16,7 @@ class ConsTable:
 
     def setConsValue(self, cons, value):
 
-        if str(type(value)) != f"<class '{self.getConsType(cons)}'>":
+        if (type(value) == str and self.getConsType(cons) != 'string') or (type(value) == int and self.getConsType(cons) != 'int') or (type(value) == bool and self.getConsType(cons) != 'bool'):
             raise ValueError(f"Invalid operation for type {self.getConsType(cons)}")
 
         try:

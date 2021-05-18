@@ -7,6 +7,7 @@ from .BigOp import BigOp
 from .TypeOp import TypeOp
 from .UnOp import UnOp
 from .IntVal import IntVal
+from .StringVal import StringVal
 from .NoOp import NoOp
 
 class Parser:
@@ -22,6 +23,11 @@ class Parser:
 
         if self.token_tipo() == 'INT':
             tmp = IntVal(self.token_valor(), [])
+            self.tokenizer.selectNext()
+            return tmp
+
+        elif self.token_tipo() == 'STR':
+            tmp = StringVal(self.token_valor(), [])
             self.tokenizer.selectNext()
             return tmp
 

@@ -125,6 +125,18 @@ class Tokenizer:
             self.actual = Token('end_line', ";")
             next_()
 
+        elif char() == '"':
+            string = char()
+            next_()
+
+            while char() != '"':
+                string += char()
+                next_()
+
+            string += char()
+            self.actual = Token("STR", string)
+            next_()
+
         else: 
             if self.position > 0 and self.actual.tipo == 'INT': raise ValueError("Dois ints seguidos")
 

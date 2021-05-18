@@ -1,11 +1,10 @@
 {
                     int x;
-                    x = 0;
+                    string y;
 
-                    while (x < 10) {
-                        x = x + 1;
-                    }
+                    x = 1;
+                    y = "oi";
 
-                    println(x);
+                    println(x + y); 
 
                 }
