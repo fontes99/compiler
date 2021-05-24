@@ -107,6 +107,10 @@ class Tokenizer:
             
             elif name in self.types: self.actual = Token('TYP', name)
 
+            elif name == "true": self.actual = Token('BOOL', 1)
+
+            elif name == "false": self.actual = Token('BOOL', 0)
+
             else : self.actual = Token('cons', name)
 
         elif char() == "=":

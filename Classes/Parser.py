@@ -21,7 +21,7 @@ class Parser:
     def parseFactor(self):
         self.tokenizer.selectNext()
 
-        if self.token_tipo() == 'INT':
+        if self.token_tipo() == 'INT' or self.token_tipo() == 'BOOL':
             tmp = IntVal(self.token_valor(), [])
             self.tokenizer.selectNext()
             return tmp
