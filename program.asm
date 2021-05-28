@@ -87,32 +87,26 @@ _start:
   PUSH DWORD 0
   MOV EBX, 10
   MOV [EBP-4], EBX
+  IF_30:
   MOV EBX, [EBP-4]
   PUSH EBX
-  CALL print
-  POP EBX
-  LOOP_33:
-  MOV EBX, [EBP-4]
-  PUSH EBX
-  MOV EBX, 1
+  MOV EBX, 5
   POP EAX
   CMP EAX, EBX
   CALL binop_jg
   CMP EBX, False
-  JE EXIT_33
-  MOV EBX, [EBP-4]
-  PUSH EBX
+  JE ELSE_30
   MOV EBX, 1
-  POP EAX
-  SUB EAX, EBX
-  MOV EBX, EAX
-  MOV [EBP-4], EBX
-  MOV EBX, [EBP-4]
   PUSH EBX
   CALL print
   POP EBX
-  JMP LOOP_33
-  EXIT_33:
+  JMP EXIT_30
+  ELSE_30:
+  MOV EBX, 0
+  PUSH EBX
+  CALL print
+  POP EBX
+  EXIT_30
 
   ; interrupcao de saida
   POP EBP

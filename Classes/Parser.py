@@ -3,6 +3,7 @@ from .Token import Token
 from .TriOp import TriOp
 from .BinOp import BinOp
 from .whileOp import whileOp
+from .ifOp import ifOp
 from .VarOp import VarOp
 from .BigOp import BigOp
 from .TypeOp import TypeOp
@@ -196,7 +197,7 @@ class Parser:
         else: 
             elsee = self.command()
         
-        return TriOp('if', [condition, iftrue, elsee])
+        return ifOp(self.tokenizer.tokenPosition, [condition, iftrue, elsee])
 
     def whileEXPR(self):
         self.tokenizer.selectNext()
