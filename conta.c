@@ -1,7 +1,11 @@
 {
-    bool x;
-    int y;
-    x = false+1;
-    y = x;
-    println(y);
+    int x;
+    x = 10;
+    
+    if (x > 5) {
+        println(1);
+    }
+    else {
+        println(0);
+    }
 }
