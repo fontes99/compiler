@@ -270,9 +270,18 @@ class Parser:
 
 
     def run(self, code):
+
+
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
+        
+        with open('header.txt', 'r') as f:
+            print(f.read())
+        
         self.tokenizer.selectNext()
 
         compiled = self.block()
         compiled.evaluate()
+
+        with open('end.txt', 'r') as f:
+            print(f.read())
 

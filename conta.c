@@ -1,7 +1,8 @@
 {
-    bool x;
-    int y;
-    x = false+1;
-    y = x;
-    println(y);
+    int i;
+    int n;
+    int f;
+    n = 5;
+    i = 2;
+    f = 1;
 }
