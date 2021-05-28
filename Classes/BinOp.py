@@ -42,35 +42,41 @@ class BinOp(Node):
 
         if self.value == 'EQL':
 
-            print("")
+            print("  CMP EAX, EBX")
+            print("  CALL binop_je")
 
             # if type(self.children[0].evaluate()) != type(self.children[1].evaluate()) : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
             # return self.children[0].evaluate() == self.children[1].evaluate()
 
         if self.value == 'AND':
 
-            print("")
+            print("  AND EAX, EBX") 
+            print("  MOV EBX, EAX")
 
             # if type(self.children[0].evaluate()) != type(self.children[1].evaluate()) : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
             # return self.children[0].evaluate() and self.children[1].evaluate()
 
         if self.value == 'OR':
             
-            print("")
+            print("  OR EAX, EBX") 
+            print("  MOV EBX, EAX")
 
             # if type(self.children[0].evaluate()) != type(self.children[1].evaluate()) : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
             # return self.children[0].evaluate() or self.children[1].evaluate()
 
         if self.value == 'GRT':
+            self.start_binop()
 
-            print("")
+            print("  CMP EAX, EBX")
+            print("  CALL binop_jg")
 
             # if type(self.children[0].evaluate()) != type(self.children[1].evaluate()) : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
             # return self.children[0].evaluate() > self.children[1].evaluate()
 
         if self.value == 'LSS':
 
-            print("")
+            print("  CMP EAX, EBX")
+            print("  CALL binop_jl")
 
             # if type(self.children[0].evaluate()) != type(self.children[1].evaluate()) : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
             # return self.children[0].evaluate() < self.children[1].evaluate()
@@ -79,9 +85,4 @@ class BinOp(Node):
 
             consTable.setConsValue(self.children[0], self.children[1])
 
-        if self.value == 'while':
-
-            print("")
-
-            # while  self.children[0].evaluate():
-            #      self.children[1].evaluate()
+        

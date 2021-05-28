@@ -2,6 +2,7 @@ from .Tokenizer import Tokenizer
 from .Token import Token
 from .TriOp import TriOp
 from .BinOp import BinOp
+from .whileOp import whileOp
 from .VarOp import VarOp
 from .BigOp import BigOp
 from .TypeOp import TypeOp
@@ -206,7 +207,7 @@ class Parser:
 
         instru = self.command()
 
-        return BinOp('while', [condition, instru])
+        return whileOp(self.tokenizer.tokenPosition, [condition, instru])
         
 
     def command(self):
