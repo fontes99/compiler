@@ -14,4 +14,7 @@ class UnOp(Node):
             return not self.children[0].evaluate()
 
         elif self.value == 'println':
-            print(self.children[0].evaluate())
+            self.children[0].evaluate()
+            print("  PUSH EBX")
+            print("  CALL print")
+            print("  POP EBX")

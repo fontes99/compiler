@@ -77,7 +77,7 @@ class BinOp(Node):
 
         if self.value == 'atrib':
 
-            consTable.setConsValue(self.children[0], self.children[1].evaluate())
+            consTable.setConsValue(self.children[0], self.children[1])
 
         if self.value == 'while':
 

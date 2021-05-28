@@ -4,4 +4,4 @@ class IntVal(Node):
 
     def evaluate(self):
 
-        return self.value
+        print(F"  MOV EBX, {self.value}")
