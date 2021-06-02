@@ -20,11 +20,13 @@ class ConsTable:
             raise ValueError(f"Invalid operation for type {self.getConsType(cons)}")
 
         try:
+            if (self.getConsType(cons) == 'bool' and value != 0) : value = 1
             self.table[cons]['value'] = value
         except:
             raise ValueError(f"Constant {cons} not assigned")
     
     def setConsType(self, cons, tipo):
+        if cons in self.table : raise ValueError("Constant already declared")
         self.setCons(cons)
         self.table[cons]['type'] = tipo
 

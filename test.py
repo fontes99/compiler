@@ -233,7 +233,7 @@ def teste_string():
                     x = "oi";
                     println(x);
                 }''')
-    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'"oi"\n'
+    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'oi\n'
 
 def teste_string():
     with open('conta.c', 'w') as f:

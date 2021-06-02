@@ -50,7 +50,7 @@ class Parser:
         elif self.token_valor() == "readln":
             self.tokenizer.selectNext()
 
-            if self.token_tipo() != "OPN" : raise ValueError("sem ( depois de readln")
+            if self.token_tipo() != "OPN" : raise ValueError("need ( before readln")
             self.tokenizer.selectNext()
             
             tmp = IntVal(int(input()), [])
@@ -150,7 +150,7 @@ class Parser:
         print_valor = self.token_valor()
         self.tokenizer.selectNext()
 
-        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no println')
+        if self.token_tipo() != 'OPN' : raise ValueError('need ( before println')
 
         tree = self.OREXPR()
         self.tokenizer.selectNext()
@@ -162,7 +162,7 @@ class Parser:
 
         self.tokenizer.selectNext()
 
-        if self.token_tipo() != 'atrib' : raise ValueError(f'não tem = depois de variavel {cons_name}')
+        if self.token_tipo() != 'atrib' : raise ValueError(f'need = after variable name {cons_name}')
 
         tree = self.OREXPR()
 
@@ -178,9 +178,12 @@ class Parser:
 
     def ifEXPR(self):
         self.tokenizer.selectNext()
-        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no if')
+        if self.token_tipo() != 'OPN' : raise ValueError('need ( before if')
 
         condition = self.OREXPR()
+        
+        if type(condition) == StringVal : raise ValueError("can't use string in if statement")
+
         self.tokenizer.selectNext()
 
         iftrue = self.command()
@@ -199,7 +202,7 @@ class Parser:
 
     def whileEXPR(self):
         self.tokenizer.selectNext()
-        if self.token_tipo() != 'OPN' : raise ValueError('não abriu parenteses no while')
+        if self.token_tipo() != 'OPN' : raise ValueError('need ( before while')
 
         condition = self.OREXPR()
         self.tokenizer.selectNext()
@@ -216,7 +219,7 @@ class Parser:
             if self.token_valor() == 'println':
                 tree = self.println()
                 
-                if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+                if self.token_tipo() != 'end_line' : raise ValueError('need ;')
                 self.tokenizer.selectNext()
                 
                 return tree
@@ -232,7 +235,7 @@ class Parser:
         elif self.token_tipo() == 'cons':
             tree = self.identifier()
 
-            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+            if self.token_tipo() != 'end_line' : raise ValueError('need ;')
             self.tokenizer.selectNext()
            
             return tree
@@ -241,7 +244,7 @@ class Parser:
             tree = self.Typing()
 
             self.tokenizer.selectNext()
-            if self.token_tipo() != 'end_line' : raise ValueError('não tem ;')
+            if self.token_tipo() != 'end_line' : raise ValueError('need ;')
             self.tokenizer.selectNext()
            
             return tree
@@ -257,7 +260,7 @@ class Parser:
 
 
     def block(self):
-        if self.token_tipo() != 'BEG' : raise ValueError('bloco não começa com {')
+        if self.token_tipo() != 'BEG' : raise ValueError('need { at start of block')
         self.tokenizer.selectNext()
 
         commands_in_block = []

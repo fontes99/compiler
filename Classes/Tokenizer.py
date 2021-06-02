@@ -21,7 +21,7 @@ class Tokenizer:
 
         char = lambda : self.origin[self.position]
 
-        while self.position < len(self.origin) and (char() == ' ' or char() == '\n'):
+        while self.position < len(self.origin) and (char() == ' ' or char() == '\n' or char() == '\t'):
             next_()
 
         if self.position == len(self.origin):
@@ -130,14 +130,13 @@ class Tokenizer:
             next_()
 
         elif char() == '"':
-            string = char()
             next_()
+            string = char()
 
             while char() != '"':
                 string += char()
                 next_()
 
-            string += char()
             self.actual = Token("STR", string)
             next_()
 
