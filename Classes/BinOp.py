@@ -4,9 +4,9 @@ from .ConsTable import consTable
 class BinOp(Node):
 
     def evaluate(self):
-        
+
         if self.value != 'atrib' and self.value != 'while':
-            if type(self.children[0].evaluate()) == str or type(self.children[1].evaluate()) == str : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
+            if (type(self.children[0].evaluate()) == str and type(self.children[1].evaluate()) != str) or (type(self.children[0].evaluate()) != str and type(self.children[1].evaluate()) == str) : raise ValueError(f"Invalid operation between {type(self.children[0].evaluate())} and {type(self.children[1].evaluate())}")
 
         if self.value == 'SUM':
             return self.children[0].evaluate() + self.children[1].evaluate()

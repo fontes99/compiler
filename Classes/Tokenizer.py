@@ -132,6 +132,7 @@ class Tokenizer:
         elif char() == '"':
             next_()
             string = char()
+            next_()
 
             while char() != '"':
                 string += char()
