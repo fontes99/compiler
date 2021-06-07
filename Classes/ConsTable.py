@@ -1,6 +1,6 @@
 class ConsTable:
 
-    def __init__(self, table):
+    def __init__(self):
         self.table_cons = {}
         self.table_func = {}
         self.tipinhos = ["int", "bool", "string"]
@@ -33,14 +33,14 @@ class ConsTable:
 
         try:
             if (self.getConsType(cons) == 'bool' and value != 0) : value = 1
-            self.table[cons]['value'] = value
+            self.table_cons[cons]['value'] = value
         except:
             raise ValueError(f"Constant {cons} not assigned")
     
     def setConsType(self, cons, tipo):
-        if cons in self.table : raise ValueError("Constant already declared")
+        if cons in self.table_cons : raise ValueError("Constant already declared")
         self.setCons(cons)
-        self.table[cons]['type'] = tipo
+        self.table_cons[cons]['type'] = tipo
 
 
     def setFuncContent(self, name, content):
