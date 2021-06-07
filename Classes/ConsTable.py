@@ -51,6 +51,11 @@ class ConsTable:
         self.setFunc(name)
         self.table_func[name]['return_type'] = tipo
 
+    def setFuncParams(self, name, params):
+        self.table_func[name]['params'] = params
+
+    def runFunc(self, name):
+        self.getFuncContent(name).evaluate()
 
 
     def getTable(self, var = 1):

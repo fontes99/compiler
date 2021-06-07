@@ -9,7 +9,7 @@ return de op booleanas esta byte, precisa retornar bool
 # test geral
 def test_geral():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     int x;
                     int y;
                     int z; 
@@ -23,7 +23,7 @@ def test_geral():
 
 def test_soma_simples():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     int x;
                     x = 3;
                     println(x); 
@@ -33,7 +33,7 @@ def test_soma_simples():
 
 def test_soma_varias():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     int x;
                     int y;
                     int z;
@@ -48,7 +48,7 @@ def test_soma_varias():
 
 def teste_issue():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                     int x1;
                     int y2;
@@ -67,7 +67,7 @@ def teste_issue():
 
 def teste_input_igual_2():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                     int x_1;
                     int y;
@@ -86,7 +86,7 @@ def teste_input_igual_2():
 
 def teste_eq():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                     int x;
                     int y;
@@ -105,7 +105,7 @@ def teste_eq():
 
 def teste_block():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                         int x; 
                         int y;
@@ -123,7 +123,7 @@ def teste_block():
 
 def teste_if():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     int x;
                     int y;
 
@@ -138,7 +138,7 @@ def teste_if():
 
 def teste_if_else():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     int x;
                     int y;
 
@@ -155,7 +155,7 @@ def teste_if_else():
 
 def teste_if_alone():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                     int x;
                     int y;
@@ -174,7 +174,7 @@ def teste_if_alone():
 
 def teste_if_elseif():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                     int x;
                     int y;
@@ -192,7 +192,7 @@ def teste_if_elseif():
 
 def teste_if_elseif_else():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
 
                     int x;
                     int y;
@@ -213,7 +213,7 @@ def teste_if_elseif_else():
 
 def teste_while():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     int x;
                     x = 0;
 
@@ -228,7 +228,7 @@ def teste_while():
 
 def teste_string():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     string x;
                     x = "oi";
                     println(x);
@@ -237,7 +237,7 @@ def teste_string():
 
 def teste_bool():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
                     bool x;
                     x = 1 > 0;
                     println(x);
@@ -246,7 +246,7 @@ def teste_bool():
 
 def teste_bool_true_false():
     with open('conta.c', 'w') as f:
-        f.write('''{
+        f.write('''int main(){
     bool x;
     int y;
     x = false+1;

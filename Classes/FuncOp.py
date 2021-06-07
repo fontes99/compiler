@@ -4,5 +4,6 @@ from .ConsTable import consTable
 class FuncOp(Node):
 
     def evaluate(self):
-        # return consTable.getConsValue(self.value)
-        pass
+        consTable.setFuncReturnType(self.value, self.children[0])
+        consTable.setFuncContent(self.value, self.children[1])
+        consTable.setFuncParams(self.value, self.children[2])

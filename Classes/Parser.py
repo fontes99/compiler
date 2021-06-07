@@ -1,4 +1,4 @@
-from Classes.ConsTable import ConsTable
+from .ConsTable import consTable
 from .Tokenizer import Tokenizer
 from .Token import Token
 from .TriOp import TriOp
@@ -45,7 +45,7 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == 'cons':
-            tmp = VarOp(self.token_valor(), [])
+            tmp = VarOp('constant', [self.token_valor()])
             self.tokenizer.selectNext()
             return tmp
 
@@ -170,14 +170,12 @@ class Parser:
 
         return BinOp('atrib', [str(cons_name), tree])
 
-    def FuncDefBlock(self):
+    def FuncDefBlock(self, name, tipo):
         params = {}
         self.tokenizer.selectNext()
 
         while self.token_tipo() != 'CLS':
 
-            print(self.token_tipo())
-            
             if self.token_tipo() != 'TYP' : raise ValueError("must declare parameter Type")
             tip = self.token_valor()
             self.tokenizer.selectNext()
@@ -195,6 +193,7 @@ class Parser:
 
         cont = self.block()
 
+        return FuncOp(name, [tipo, cont, params])
 
 
     def ifEXPR(self):
@@ -272,7 +271,7 @@ class Parser:
 
 
             if self.token_tipo() == 'end_line' : return TypeOp(tipo, [name])
-            elif self.token_tipo() == 'OPN' : return self.FuncDefBlock(tipo, name)
+            elif self.token_tipo() == 'OPN' : return self.FuncDefBlock(name, tipo)
 
 
         elif self.token_tipo() == 'end_line':
@@ -302,6 +301,7 @@ class Parser:
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
         self.tokenizer.selectNext()
 
-        compiled = self.block()
+        compiled = self.command()
         compiled.evaluate()
+        consTable.runFunc('main')
 

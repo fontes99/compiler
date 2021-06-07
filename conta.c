@@ -1,4 +1,4 @@
-{
+int main(){
     bool x;
     int y;
     x = false+1;

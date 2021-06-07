@@ -107,7 +107,9 @@ class Tokenizer:
                 name += char()
                 next_()
 
-            if name in self.builtIns: self.actual = Token('builtin', name)
+            if name == 'return': self.actual = Token('return', 'return')
+            
+            elif name in self.builtIns: self.actual = Token('builtin', name)
             
             elif name in self.types: self.actual = Token('TYP', name)
 
