@@ -235,14 +235,14 @@ def teste_string():
                 }''')
     assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'oi\n'
 
-def teste_string():
+def teste_bool():
     with open('conta.c', 'w') as f:
         f.write('''{
                     bool x;
                     x = 1 > 0;
                     println(x);
                 }''')
-    assert subprocess.check_output("python3 main.py conta.c", shell=True) == b'True\n'
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 1
 
 def teste_bool_true_false():
     with open('conta.c', 'w') as f:
