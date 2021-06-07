@@ -1,18 +1,30 @@
 class ConsTable:
 
     def __init__(self, table):
-        self.table = table
+        self.table_cons = {}
+        self.table_func = {}
         self.tipinhos = ["int", "bool", "string"]
 
+
     def setCons(self, cons):
-        self.table[cons] = {'value' : None, 'type' : None}
+        self.table_cons[cons] = {'value' : None, 'type' : None}
+
+    def setFunc(self, name):
+            self.table_func[name] = {'content' : None, 'return_type' : None}
 
 
     def getConsValue(self, cons):
-        return self.table[cons]['value']
+        return self.table_cons[cons]['value']
 
     def getConsType(self, cons):
-        return self.table[cons]['type']
+        return self.table_cons[cons]['type']
+
+    def getFuncContent(self, name):
+        return self.table_func[name]['content']
+
+    def getFuncReturnType(self, name):
+        return self.table_func[name]['return_type']
+
 
     def setConsValue(self, cons, value):
 
@@ -30,9 +42,20 @@ class ConsTable:
         self.setCons(cons)
         self.table[cons]['type'] = tipo
 
-    def getTable(self):
-        return self.table
+
+    def setFuncContent(self, name, content):
+        pass
+
+    def setFuncReturnType(self, name, tipo):
+        pass
+
+
+
+    def getTable(self, var = 1):
+        if var == 1 : return self.table_cons
+        elif var == 0 : return self.table_func
+        else : raise ValueError("Invalid var value")
 
 
 global consTable 
-consTable = ConsTable({})
+consTable = ConsTable()

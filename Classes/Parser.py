@@ -3,6 +3,7 @@ from .Token import Token
 from .TriOp import TriOp
 from .BinOp import BinOp
 from .VarOp import VarOp
+from .FuncOp import FuncOp
 from .BigOp import BigOp
 from .TypeOp import TypeOp
 from .UnOp import UnOp
