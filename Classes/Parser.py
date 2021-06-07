@@ -1,3 +1,4 @@
+from Classes.ConsTable import ConsTable
 from .Tokenizer import Tokenizer
 from .Token import Token
 from .TriOp import TriOp
@@ -169,13 +170,32 @@ class Parser:
 
         return BinOp('atrib', [str(cons_name), tree])
 
-    def Typing(self):
-        tmp = self.token_valor()
-
+    def FuncDefBlock(self):
+        params = {}
         self.tokenizer.selectNext()
-        if self.token_tipo() != 'cons' : raise ValueError(f"Invalid constant name {self.token_valor()}")
 
-        return TypeOp(tmp, [self.token_valor()])
+        while self.token_tipo() != 'CLS':
+
+            print(self.token_tipo())
+            
+            if self.token_tipo() != 'TYP' : raise ValueError("must declare parameter Type")
+            tip = self.token_valor()
+            self.tokenizer.selectNext()
+            
+            if self.token_tipo() != 'cons' : raise ValueError("must declare parameter name")
+            nam = self.token_valor()
+            self.tokenizer.selectNext()
+
+            params[nam] = {'tipo' : tip, 'value' : None}
+
+
+            if self.token_tipo() != 'SEP' : raise ValueError("must separate params with ','")
+        
+        self.tokenizer.selectNext()
+
+        cont = self.block()
+
+
 
     def ifEXPR(self):
         self.tokenizer.selectNext()
@@ -242,13 +262,18 @@ class Parser:
             return tree
 
         elif self.token_tipo() == 'TYP':
-            tree = self.Typing()
+            tipo = self.token_valor()
+            self.tokenizer.selectNext()
 
+            if self.token_tipo() != 'cons' : raise ValueError(f"Invalid constant name {self.token_valor()}")
+            
+            name = self.token_valor()
             self.tokenizer.selectNext()
-            if self.token_tipo() != 'end_line' : raise ValueError('need ;')
-            self.tokenizer.selectNext()
-           
-            return tree
+
+
+            if self.token_tipo() == 'end_line' : return TypeOp(tipo, [name])
+            elif self.token_tipo() == 'OPN' : return self.FuncDefBlock(tipo, name)
+
 
         elif self.token_tipo() == 'end_line':
             self.tokenizer.selectNext()

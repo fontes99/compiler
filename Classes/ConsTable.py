@@ -10,7 +10,7 @@ class ConsTable:
         self.table_cons[cons] = {'value' : None, 'type' : None}
 
     def setFunc(self, name):
-            self.table_func[name] = {'content' : None, 'return_type' : None}
+            self.table_func[name] = {'content' : None, 'return_type' : None, 'params' : {}}
 
 
     def getConsValue(self, cons):
@@ -44,10 +44,12 @@ class ConsTable:
 
 
     def setFuncContent(self, name, content):
-        pass
+        self.table_func[name]['content'] = content
 
     def setFuncReturnType(self, name, tipo):
-        pass
+        if name in self.table_func : raise ValueError("Function already exists")
+        self.setFunc(name)
+        self.table_func[name]['return_type'] = tipo
 
 
 

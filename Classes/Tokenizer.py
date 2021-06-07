@@ -30,6 +30,10 @@ class Tokenizer:
             if self.balance_brace != 0: raise ValueError("Error in balancing '{' and '}'")
             return
 
+        elif char() == ',':
+            self.actual = Token('SEP', char())
+            next_()
+
         elif char() == '/':
             self.actual = Token('DIV', char())
             next_()
