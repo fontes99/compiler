@@ -15,3 +15,6 @@ class UnOp(Node):
 
         elif self.value == 'println':
             print(self.children[0].evaluate())
+        
+        elif self.value == 'return':
+            return self.children[0].evaluate()

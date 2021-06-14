@@ -1,7 +1,10 @@
-int main(){
-    bool x;
-    int y;
-    x = false+1;
-    y = x;
-    println(y);
+
+int soma(int x, int y) {
+    return x + y;
+}
+
+bool main(){
+    string x;
+    x = "alou";
+    println(x);
 }

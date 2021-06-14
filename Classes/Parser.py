@@ -175,7 +175,7 @@ class Parser:
         self.tokenizer.selectNext()
 
         while self.token_tipo() != 'CLS':
-
+            
             if self.token_tipo() != 'TYP' : raise ValueError("must declare parameter Type")
             tip = self.token_valor()
             self.tokenizer.selectNext()
@@ -186,9 +186,12 @@ class Parser:
 
             params[nam] = {'tipo' : tip, 'value' : None}
 
+            if self.token_tipo() == 'CLS' : break
 
             if self.token_tipo() != 'SEP' : raise ValueError("must separate params with ','")
         
+            self.tokenizer.selectNext()
+
         self.tokenizer.selectNext()
 
         cont = self.block()
@@ -232,6 +235,8 @@ class Parser:
         return BinOp('while', [condition, instru])
         
 
+
+
     def command(self):
 
         if self.token_tipo() == 'builtin':
@@ -250,11 +255,21 @@ class Parser:
             elif self.token_valor() == 'while':
                 return self.whileEXPR()
 
+            elif self.token_valor() == 'return':
+                return UnOp('return', [self.OREXPR()])
+
             else : raise ValueError("builtin not valid")
 
         elif self.token_tipo() == 'cons':
-            tree = self.identifier()
 
+            print(consTable.getTable(1))
+            print(consTable.getTable(0))
+            
+            if self.token_valor() in consTable.table_func:          # parametros!!
+                tree = consTable.runFunc(self.token_valor())
+
+            else : tree = self.identifier()
+            
             if self.token_tipo() != 'end_line' : raise ValueError('need ;')
             self.tokenizer.selectNext()
            
@@ -284,6 +299,8 @@ class Parser:
         else : raise ValueError(f"Syntax error : {self.token_tipo()} token {self.tokenizer.tokenPosition}")
 
 
+
+
     def block(self):
         if self.token_tipo() != 'BEG' : raise ValueError('need { at start of block')
         self.tokenizer.selectNext()
@@ -297,11 +314,17 @@ class Parser:
         return BigOp('block', commands_in_block)
 
 
+
+
     def run(self, code):
         self.tokenizer = Tokenizer(code, 0, Token('INIT', '-'))
         self.tokenizer.selectNext()
 
-        compiled = self.command()
-        compiled.evaluate()
+
+        while self.token_tipo() != 'EOF':
+            compiled = self.command()
+            compiled.evaluate()
+
+
         consTable.runFunc('main')
 

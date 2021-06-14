@@ -8,7 +8,7 @@ class Tokenizer:
         self.actual = actual
         self.balance_paren = 0
         self.balance_brace = 0
-        self.builtIns = ["println", "readln", "if", "while", "else"]
+        self.builtIns = ["println", "readln", "if", "while", "else", "return"]
         self.types = ["int", "bool", "string"]
         self.tokenPosition = 0
 
@@ -107,9 +107,7 @@ class Tokenizer:
                 name += char()
                 next_()
 
-            if name == 'return': self.actual = Token('return', 'return')
-            
-            elif name in self.builtIns: self.actual = Token('builtin', name)
+            if name in self.builtIns: self.actual = Token('builtin', name)
             
             elif name in self.types: self.actual = Token('TYP', name)
 
