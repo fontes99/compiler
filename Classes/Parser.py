@@ -19,17 +19,19 @@ class Parser:
         self.token_tipo = lambda : self.tokenizer.actual.tipo
         self.token_valor = lambda : self.tokenizer.actual.value
 
+        self.func_actual = None
+
 
     def parseFactor(self):
         self.tokenizer.selectNext()
 
         if self.token_tipo() == 'INT' or self.token_tipo() == 'BOOL':
-            tmp = IntVal(self.token_valor(), [])
+            tmp = IntVal(self.token_valor(), self.func_actual, [])
             self.tokenizer.selectNext()
             return tmp
 
         elif self.token_tipo() == 'STR':
-            tmp = StringVal(self.token_valor(), [])
+            tmp = StringVal(self.token_valor(), self.func_actual, [])
             self.tokenizer.selectNext()
             return tmp
 
@@ -45,7 +47,31 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == 'cons':
-            tmp = VarOp('constant', [self.token_valor()])
+
+            if self.token_valor() in consTable.table_func:
+                
+                func =  self.token_valor()
+                
+                self.tokenizer.selectNext()
+                if self.token_tipo() != "OPN" : raise ValueError("need ( after func call")
+                
+                self.tokenizer.selectNext()
+                if self.token_tipo() != "CLS" : 
+
+                    prms = consTable.table_func[func]['params']
+                    var = iter(prms)
+
+                    while self.token_tipo() != 'CLS':
+                        consTable.setConsValue(next(var), self.token_valor(), func)
+                        self.tokenizer.selectNext()
+
+                else :
+                    self.tokenizer.selectNext()
+                    return consTable.getFuncContent(func)
+
+                print(self.token_valor())
+
+            tmp = VarOp('constant', self.func_actual, [self.token_valor()])
             self.tokenizer.selectNext()
             return tmp
 
@@ -55,7 +81,7 @@ class Parser:
             if self.token_tipo() != "OPN" : raise ValueError("need ( before readln")
             self.tokenizer.selectNext()
             
-            tmp = IntVal(int(input()), [])
+            tmp = IntVal(int(input()), self.func_actual, [])
             self.tokenizer.selectNext()
             return tmp
 
@@ -70,7 +96,7 @@ class Parser:
         while self.token_tipo() == 'DIV' or self.token_tipo() == 'MULT':
             
             if self.token_tipo() == 'DIV' or self.token_tipo() == 'MULT':
-                res = BinOp(self.token_tipo(), [res, self.parseFactor()])
+                res = BinOp(self.token_tipo(), self.func_actual, [res, self.parseFactor()])
             
             else: raise ValueError('not DIV or MULT')
             
@@ -85,7 +111,7 @@ class Parser:
         while self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB':
             
             if self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB':
-                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+                res = BinOp(self.token_tipo(), self.func_actual, [res, self.parseTerm()])
 
             else: raise ValueError('not SUM or SUB')
             
@@ -99,7 +125,7 @@ class Parser:
         while self.token_tipo() == 'GRT' or self.token_tipo() == 'LSS':
             
             if self.token_tipo() == 'GRT' or self.token_tipo() == 'LSS':
-                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+                res = BinOp(self.token_tipo(), self.func_actual, [res, self.parseTerm()])
 
             else: raise ValueError('not GRT or LSS')
             
@@ -113,7 +139,7 @@ class Parser:
         while self.token_tipo() == 'EQL':
             
             if self.token_tipo() == 'EQL':
-                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+                res = BinOp(self.token_tipo(), self.func_actual, [res, self.parseTerm()])
 
             else: raise ValueError('not EQL')
             
@@ -127,7 +153,7 @@ class Parser:
         while self.token_tipo() == 'AND':
             
             if self.token_tipo() == 'AND':
-                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+                res = BinOp(self.token_tipo(), self.func_actual, [res, self.parseTerm()])
 
             else: raise ValueError('not AND')
             
@@ -141,7 +167,7 @@ class Parser:
         while self.token_tipo() == 'OR':
             
             if self.token_tipo() == 'OR':
-                res = BinOp(self.token_tipo(), [res, self.parseTerm()])
+                res = BinOp(self.token_tipo(), self.func_actual, [res, self.parseTerm()])
 
             else: raise ValueError('not OR')
             
@@ -157,9 +183,10 @@ class Parser:
         tree = self.OREXPR()
         self.tokenizer.selectNext()
 
-        return UnOp(print_valor, [tree])
+        return UnOp(print_valor, self.func_actual, [tree])
 
     def identifier(self):
+        print(self.token_valor())
         cons_name = self.token_valor()
 
         self.tokenizer.selectNext()
@@ -168,7 +195,7 @@ class Parser:
 
         tree = self.OREXPR()
 
-        return BinOp('atrib', [str(cons_name), tree])
+        return BinOp('atrib', self.func_actual, [str(cons_name), tree])
 
     def FuncDefBlock(self, name, tipo):
         params = {}
@@ -184,7 +211,7 @@ class Parser:
             nam = self.token_valor()
             self.tokenizer.selectNext()
 
-            params[nam] = {'tipo' : tip, 'value' : None}
+            params[nam] = {'type' : tip, 'value' : None}
 
             if self.token_tipo() == 'CLS' : break
 
@@ -196,7 +223,7 @@ class Parser:
 
         cont = self.block()
 
-        return FuncOp(name, [tipo, cont, params])
+        return FuncOp(name, self.func_actual, [tipo, cont, params])
 
 
     def ifEXPR(self):
@@ -216,7 +243,7 @@ class Parser:
             elsee = self.command()
 
         elif self.token_tipo() == 'END':
-            elsee = NoOp('nop', [])
+            elsee = NoOp('nop', self.func_actual, [])
 
         else: 
             elsee = self.command()
@@ -232,7 +259,7 @@ class Parser:
 
         instru = self.command()
 
-        return BinOp('while', [condition, instru])
+        return BinOp('while', self.func_actual, [condition, instru])
         
 
 
@@ -256,21 +283,20 @@ class Parser:
                 return self.whileEXPR()
 
             elif self.token_valor() == 'return':
-                return UnOp('return', [self.OREXPR()])
+                return UnOp('return', self.func_actual, [self.OREXPR()])
 
             else : raise ValueError("builtin not valid")
 
         elif self.token_tipo() == 'cons':
-
-            print(consTable.getTable(1))
-            print(consTable.getTable(0))
             
-            if self.token_valor() in consTable.table_func:          # parametros!!
-                tree = consTable.runFunc(self.token_valor())
+            # if self.token_valor() in consTable.table_func:          # parametros!!
+            #     tree = consTable.runFunc(self.token_valor())
 
-            else : tree = self.identifier()
+            # else : tree = self.identifier()
             
-            if self.token_tipo() != 'end_line' : raise ValueError('need ;')
+            tree = self.identifier()
+
+            if self.token_tipo() != 'end_line' : raise ValueError(f'need ; - got {self.token_valor()}')
             self.tokenizer.selectNext()
            
             return tree
@@ -285,13 +311,15 @@ class Parser:
             self.tokenizer.selectNext()
 
 
-            if self.token_tipo() == 'end_line' : return TypeOp(tipo, [name])
-            elif self.token_tipo() == 'OPN' : return self.FuncDefBlock(name, tipo)
+            if self.token_tipo() == 'end_line' : return TypeOp(tipo, self.func_actual, [name])
+            elif self.token_tipo() == 'OPN' : 
+                self.func_actual = name
+                return self.FuncDefBlock(name, tipo)
 
 
         elif self.token_tipo() == 'end_line':
             self.tokenizer.selectNext()
-            return NoOp('pass', [])
+            return NoOp('pass', self.func_actual, [])
 
         elif self.token_tipo() == 'BEG':
             return self.block()
@@ -311,7 +339,7 @@ class Parser:
             commands_in_block.append(self.command())
         
         self.tokenizer.selectNext()
-        return BigOp('block', commands_in_block)
+        return BigOp('block', self.func_actual, commands_in_block)
 
 
 
@@ -325,6 +353,7 @@ class Parser:
             compiled = self.command()
             compiled.evaluate()
 
-
         consTable.runFunc('main')
+        
+        print(consTable.table_func)
 
