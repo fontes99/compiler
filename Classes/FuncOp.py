@@ -11,7 +11,7 @@ class FuncOp(Node):
             consTable.setFuncParams(self.func, self.children[2])
 
         elif self.value == 'call':
-            return consTable.runFunc(self.children[0])
+            consTable.runFunc(self.children[0])
 
         elif self.value == 'param':
-            pass
+            
