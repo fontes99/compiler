@@ -14,4 +14,4 @@ class FuncOp(Node):
             consTable.runFunc(self.children[0])
 
         elif self.value == 'param':
-            
+            pass
