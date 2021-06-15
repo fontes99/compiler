@@ -47,8 +47,7 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == 'cons':
-
-            if self.token_valor() in consTable.table_func:
+            if self.token_valor() in consTable.table_func: # pode passar isso para o evaluate de VarOp
                 
                 func =  self.token_valor()
                 
@@ -58,18 +57,22 @@ class Parser:
                 self.tokenizer.selectNext()
                 if self.token_tipo() != "CLS" : 
 
-                    prms = consTable.table_func[func]['params']
-                    var = iter(prms)
+                    prm = []
 
                     while self.token_tipo() != 'CLS':
-                        consTable.setConsValue(next(var), self.token_valor(), func)
+                        prm.append(self.token_valor())
+                        
                         self.tokenizer.selectNext()
+                        if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
+                        self.tokenizer.selectNext()
+
+                    self.tokenizer.selectNext()
+                    return FuncOp('param' , func, [prm])
 
                 else :
                     self.tokenizer.selectNext()
-                    return consTable.getFuncContent(func)
+                    return FuncOp('call', self.func_actual, [func])
 
-                print(self.token_valor())
 
             tmp = VarOp('constant', self.func_actual, [self.token_valor()])
             self.tokenizer.selectNext()
@@ -186,7 +189,6 @@ class Parser:
         return UnOp(print_valor, self.func_actual, [tree])
 
     def identifier(self):
-        print(self.token_valor())
         cons_name = self.token_valor()
 
         self.tokenizer.selectNext()
@@ -223,7 +225,7 @@ class Parser:
 
         cont = self.block()
 
-        return FuncOp(name, self.func_actual, [tipo, cont, params])
+        return FuncOp('def', name, [tipo, cont, params])
 
 
     def ifEXPR(self):
@@ -293,6 +295,7 @@ class Parser:
             #     tree = consTable.runFunc(self.token_valor())
 
             # else : tree = self.identifier()
+
             
             tree = self.identifier()
 
@@ -354,6 +357,6 @@ class Parser:
             compiled.evaluate()
 
         consTable.runFunc('main')
-        
+
         print(consTable.table_func)
 

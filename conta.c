@@ -6,10 +6,7 @@ int soma() {
 }
 
 bool main(){
-    string x;
     int y;
-    x = "alou";
     y = soma();
-    println(x);
     println(y);
 }

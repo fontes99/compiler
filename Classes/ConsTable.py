@@ -22,6 +22,9 @@ class ConsTable:
     def getFuncContent(self, name):
         return self.table_func[name]['content']
 
+    def getFuncParams(self, name):
+        return self.table_func[name]['params']
+
     def getFuncReturnType(self, name):
         return self.table_func[name]['return_type']
 
