@@ -47,6 +47,7 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == 'cons':
+            print(consTable.table_func)
             if self.token_valor() in consTable.table_func: # pode passar isso para o evaluate de VarOp
                 
                 func =  self.token_valor()
@@ -250,7 +251,7 @@ class Parser:
         else: 
             elsee = self.command()
         
-        return TriOp('if', [condition, iftrue, elsee])
+        return TriOp('if', self.func_actual, [condition, iftrue, elsee])
 
     def whileEXPR(self):
         self.tokenizer.selectNext()

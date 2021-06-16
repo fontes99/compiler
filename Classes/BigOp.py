@@ -4,4 +4,6 @@ class BigOp(Node):
 
     def evaluate(self):
         for i in self.children:
-            i.evaluate()
+            x = i.evaluate()
+            if i.value == 'return':
+                return x

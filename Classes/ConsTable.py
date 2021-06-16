@@ -1,7 +1,7 @@
 class ConsTable:
 
     def __init__(self):
-        self.table_cons = {}
+        self.return_ = {'value' : None, 'type' : None}
         self.table_func = {}
         self.tipinhos = ["int", "bool", "string"]
 
@@ -55,14 +55,11 @@ class ConsTable:
         self.table_func[name]['return_type'] = tipo
 
     def setFuncParams(self, name, params):
-
-        for cst in params:
-            self.setConsType(cst, cst['type'], name)
-            self.setConsValue(cst, cst['value'], name)
-
+        self.table_func[name]['params'] = params
+        
 
     def runFunc(self, name):
-        self.getFuncContent(name).evaluate()
+        return self.getFuncContent(name).evaluate()
 
 
     def getTable(self):

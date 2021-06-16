@@ -1,3 +1,4 @@
+from Classes.ConsTable import consTable
 from .Node import Node
 
 class UnOp(Node):
@@ -17,4 +18,4 @@ class UnOp(Node):
             print(self.children[0].evaluate())
         
         elif self.value == 'return':
-            return self.children[0].evaluate()
+            consTable.return_ = self.children[0].evaluate()

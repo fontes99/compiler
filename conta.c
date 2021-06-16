@@ -1,12 +1,14 @@
 
-int soma() {
+int soma(int x) {
     int z;
     z = 10;
-    return z;
+    println("alo");
+
+    return x;
 }
 
 bool main(){
     int y;
-    y = soma();
+    y = soma(4);
     println(y);
 }
