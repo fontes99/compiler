@@ -4,6 +4,6 @@ class BigOp(Node):
 
     def evaluate(self):
         for i in self.children:
-            x = i.evaluate()
+            i.evaluate()
             if i.value == 'return':
-                return x
+                return 'break'

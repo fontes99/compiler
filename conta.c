@@ -1,14 +1,16 @@
 
-int soma(int x) {
+int soma(int x, int y) {
     int z;
     z = 10;
     println("alo");
 
-    return x;
+    while (z < 100) {
+        return x;
+    }
 }
 
 bool main(){
     int y;
-    y = soma(4);
+    y = soma(4, 5);
     println(y);
 }

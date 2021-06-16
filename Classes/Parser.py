@@ -47,7 +47,6 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == 'cons':
-            print(consTable.table_func)
             if self.token_valor() in consTable.table_func: # pode passar isso para o evaluate de VarOp
                 
                 func =  self.token_valor()
@@ -64,11 +63,15 @@ class Parser:
                         prm.append(self.token_valor())
                         
                         self.tokenizer.selectNext()
+
+                        if self.token_tipo() == "CLS" : break
+                        
                         if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
+                        
                         self.tokenizer.selectNext()
 
                     self.tokenizer.selectNext()
-                    return FuncOp('param' , func, [prm])
+                    return FuncOp('param' , func, [prm, func])
 
                 else :
                     self.tokenizer.selectNext()
@@ -359,5 +362,5 @@ class Parser:
 
         consTable.runFunc('main')
 
-        print(consTable.table_func)
+        # print(consTable.table_func)
 

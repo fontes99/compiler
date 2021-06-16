@@ -40,4 +40,6 @@ class BinOp(Node):
 
         if self.value == 'while':
             while  self.children[0].evaluate():
-                 self.children[1].evaluate()
+                x = self.children[1].evaluate()
+                if x == 'break' : break
+                

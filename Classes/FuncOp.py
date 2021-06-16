@@ -10,10 +10,13 @@ class FuncOp(Node):
             consTable.setFuncContent(self.func, self.children[1])
             consTable.setFuncParams(self.func, self.children[2])
 
-        elif self.value == 'call': 
+        elif self.value == 'call':
             consTable.runFunc(self.children[0])
             return consTable.return_
 
-        elif self.value == 'param':
-            for cst in self.children[0]:
-                consTable.setConsValue(cst, cst['value'], self.func)
+        elif self.value == 'param': 
+            for i in range(len(self.children[0])):
+                consTable.setConsValue(consTable.getParams(self.children[1])[i], self.children[0][i], self.func)
+
+            consTable.runFunc(self.children[1])
+            return consTable.return_

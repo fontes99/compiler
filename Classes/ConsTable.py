@@ -65,6 +65,9 @@ class ConsTable:
     def getTable(self):
         return self.table_func
 
+    def getParams(self, name):
+        return list(self.table_func[name]['params'])
+
 
 global consTable 
 consTable = ConsTable()
