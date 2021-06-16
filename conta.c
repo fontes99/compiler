@@ -1,16 +1,14 @@
 
-int soma(int x, int y) {
-    int z;
-    z = 10;
-    println("alo");
-
-    while (z < 100) {
-        return x;
+int print_number(int a){
+    int i;
+    i = 0;
+    while (i <10){
+        i = i + 1;
+        return i;
     }
 }
 
-bool main(){
-    int y;
-    y = soma(4, 5);
-    println(y);
+int  main(){
+    
+    println(print_number(2));
 }
