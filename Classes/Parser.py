@@ -37,7 +37,7 @@ class Parser:
 
         elif self.token_tipo() == 'SUM' or self.token_tipo() == 'SUB' or self.token_tipo() == 'NEG':
             tmp = self.token_tipo()
-            return UnOp(tmp, [self.parseFactor()]) 
+            return UnOp(tmp, self.func_actual, [self.parseFactor()]) 
 
         elif self.token_tipo() == 'OPN':
 
@@ -69,6 +69,8 @@ class Parser:
                         if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
                         
                         self.tokenizer.selectNext()
+
+                    if len(prm) != len(consTable.getFuncParams(func)) :  raise ValueError(f"must declare {len(consTable.getFuncParams(func))} positional arguments, got {len(prm)}")
 
                     self.tokenizer.selectNext()
                     return FuncOp('param' , func, [prm, func])
@@ -295,13 +297,40 @@ class Parser:
 
         elif self.token_tipo() == 'cons':
             
-            # if self.token_valor() in consTable.table_func:          # parametros!!
-            #     tree = consTable.runFunc(self.token_valor())
+            if self.token_valor() in consTable.table_func: # pode passar isso para o evaluate de VarOp
+                
+                func =  self.token_valor()
+                
+                self.tokenizer.selectNext()
+                if self.token_tipo() != "OPN" : raise ValueError("need ( after func call")
+                
+                self.tokenizer.selectNext()
+                if self.token_tipo() != "CLS" : 
 
-            # else : tree = self.identifier()
+                    prm = []
+
+                    while self.token_tipo() != 'CLS':
+                        prm.append(self.token_valor())
+                        
+                        self.tokenizer.selectNext()
+
+                        if self.token_tipo() == "CLS" : breaks
+                        
+                        if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
+                        
+                        self.tokenizer.selectNext()
+
+                    if len(prm) != len(consTable.getFuncParams(func)) :  raise ValueError(f"must declare {len(consTable.getFuncParams(func))} positional arguments, got {len(prm)}")
+
+                    self.tokenizer.selectNext()
+                    return FuncOp('param' , func, [prm, func])
+
+                else :
+                    self.tokenizer.selectNext()
+                    return FuncOp('call', self.func_actual, [func])
 
             
-            tree = self.identifier()
+            else : tree = self.identifier()
 
             if self.token_tipo() != 'end_line' : raise ValueError(f'need ; - got {self.token_valor()}')
             self.tokenizer.selectNext()

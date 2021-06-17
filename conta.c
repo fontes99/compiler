@@ -1,7 +1,12 @@
 
+int soma(int x, int y, int z){
+    return x + y;
+}
+
+
 int main(){
-    println(1+1);
-    println(21+21);
-    println(83-41);
+    int x;
+    x = soma(2,3);
+    println(x);
 }
 
