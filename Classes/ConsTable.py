@@ -61,7 +61,7 @@ class ConsTable:
     def setFuncParams(self, function, params):
         self.table_func[function]['params'] = params
 
-    def removeCons(self, cons, function, qt0, qt1):
+    def removeCons(self, function, qt0, qt1):
         prms = self.getParams(function)
 
         for i in range(qt0, qt1):
@@ -73,7 +73,7 @@ class ConsTable:
         x = self.getFuncContent(function).evaluate()
         atrib1 = self.getParams(function)
 
-        self.removeCons(1, function, len(atrib0), len(atrib1))
+        self.removeCons(function, len(atrib0), len(atrib1))
 
         return x
 

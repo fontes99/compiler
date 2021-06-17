@@ -1,33 +1,7 @@
-
-/*Ok*/
-
-int soma(int x, int y)
-{
-    int res;
-    res = x + y;
-    return res;    
+int main(){
+    bool x;
+    int y;
+    x = false+1;
+    y = x;
+    println(y);
 }
-
-bool comparaSoma()
-{
-    bool res;
-    int x;
-    x = 3;
-    
-    res = soma(x,2) == 8;
-    
-    return res;
-}
-
-
-int main()
-{
-    int x;
-    bool z;
-    
-    z = comparaSoma();
-    x = z;
-    println(x);
-    
-}
-
