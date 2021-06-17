@@ -255,4 +255,28 @@ def teste_bool_true_false():
 }''')
     assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 1
 
+def teste_recursive():
+    with open('conta.c', 'w') as f:
+        f.write('''
+int serie(int x)
+{
+    if (x == 1) {
+        return x;
+    }else{
+    	return x + serie(x-1);
+    }
+    
+}
+
+int main()
+{
+    int x;
+    x = 5;
+    println(serie(x));
+    
+}
+
+''')
+    assert int(subprocess.check_output("python3 main.py conta.c", shell=True)) == 15
+
     

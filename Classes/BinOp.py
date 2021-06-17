@@ -36,7 +36,7 @@ class BinOp(Node):
             return self.children[0].evaluate() < self.children[1].evaluate()
 
         if self.value == 'atrib':
-            consTable.setConsValue(self.children[0], self.children[1].evaluate(), self.func)
+            consTable.setConsValue(self.children[0], self.children[1].evaluate(), self.func, 'atrib')
 
         if self.value == 'while':
             while  self.children[0].evaluate():

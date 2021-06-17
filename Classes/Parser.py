@@ -72,8 +72,11 @@ class Parser:
                     self.tokenizer.selectNext()
                     return FuncOp('call', self.func_actual, [0, func, 'factor'])
 
-
-            tmp = VarOp('constant', self.func_actual, [self.token_valor()])
+            if self.token_valor() in consTable.getParams(self.func_actual) : 
+                table = 'params'
+                # print(f'peguei {self.token_valor()} q é {consTable.getConsValue(self.token_valor(), self.func, )}')
+            else : table = 'atrib'
+            tmp = VarOp('constant', self.func_actual, [self.token_valor(), table])
             self.tokenizer.selectNext()
             return tmp
 
@@ -88,7 +91,6 @@ class Parser:
             return tmp
 
         elif self.token_tipo() == "CLS" :
-            # self.tokenizer.selectNext()
             return self.token_tipo()
 
         else:
@@ -344,7 +346,7 @@ class Parser:
             self.tokenizer.selectNext()
 
 
-            if self.token_tipo() == 'end_line' : return TypeOp(tipo, self.func_actual, [name])
+            if self.token_tipo() == 'end_line' : return TypeOp(tipo, self.func_actual, [name, 'atrib'])
             elif self.token_tipo() == 'OPN' : 
                 self.func_actual = name
                 return self.FuncDefBlock(name, tipo)

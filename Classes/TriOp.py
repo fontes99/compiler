@@ -1,3 +1,4 @@
+from Classes.ConsTable import consTable
 from .Node import Node
 
 class TriOp(Node):
@@ -5,6 +6,7 @@ class TriOp(Node):
     def evaluate(self):
 
             if self.value == 'if':
+                # print(self.children[0].evaluate())
                 if self.children[0].evaluate():
                     return self.children[1].evaluate()
                 else:

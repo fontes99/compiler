@@ -6,18 +6,19 @@ class ConsTable:
         self.tipinhos = ["int", "bool", "string"]
 
 
-    def setCons(self, cons, function):
-        self.table_func[function]['params'][cons] = {'value' : None, 'type' : None}
+    def setCons(self, cons, function, table):
+        self.table_func[function][table][cons] = {'value' : None, 'type' : None}
 
     def setFunc(self, function):
-        self.table_func[function] = {'content' : None, 'return_type' : None, 'params' : {}}
+        self.table_func[function] = {'content' : None, 'return_type' : None, 'params' : {}, 'atrib' : {}}
 
 
-    def getConsValue(self, cons, function):
-        return self.table_func[function]['params'][cons]['value']
+    def getConsValue(self, cons, function, table):
+        return self.table_func[function][table][cons]['value']
 
-    def getConsType(self, cons, function):
-        return self.table_func[function]['params'][cons]['type']
+    def getConsType(self, cons, function, table):
+        # print(self.table_func)
+        return self.table_func[function][table][cons]['type']
 
     def getFuncContent(self, function):
         return self.table_func[function]['content']
@@ -29,23 +30,23 @@ class ConsTable:
         return self.table_func[function]['return_type']
 
 
-    def setConsValue(self, cons, value, function):
+    def setConsValue(self, cons, value, function, table):
 
-        if (type(value) == str and self.getConsType(cons, function) != 'string') or (type(value) == int and self.getConsType(cons, function) == 'string') or (type(value) == bool  and self.getConsType(cons, function) == 'string'):
-            raise ValueError(f"Invalid operation for type {self.getConsType(cons, function)} {cons} and {type(value)} {value}")
+        if (type(value) == str and self.getConsType(cons, function, table) != 'string') or (type(value) == int and self.getConsType(cons, function, table) == 'string') or (type(value) == bool  and self.getConsType(cons, function, table) == 'string'):
+            raise ValueError(f"Invalid operation for type {self.getConsType(cons, function, table)} {cons} and {type(value)} {value}")
 
         try:
-            if (self.getConsType(cons, function) == 'bool' and value != 0) : value = 1
-            elif (self.getConsType(cons, function) == 'int' and value == False) : value = 0
-            elif (self.getConsType(cons, function) == 'int' and value == True) : value = 1
-            self.table_func[function]['params'][cons]['value'] = value
+            if (self.getConsType(cons, function, table) == 'bool' and value != 0) : value = 1
+            elif (self.getConsType(cons, function, table) == 'int' and value == False) : value = 0
+            elif (self.getConsType(cons, function, table) == 'int' and value == True) : value = 1
+            self.table_func[function][table][cons]['value'] = value
         except:
             raise ValueError(f"Constant {cons} not assigned")
     
-    def setConsType(self, cons, tipo, function):
-        if cons in self.table_func[function]['params'] : raise ValueError(f"Constant {cons} already declared")
-        self.setCons(cons, function)
-        self.table_func[function]['params'][cons]['type'] = tipo
+    def setConsType(self, cons, tipo, function, table):
+        if cons in self.table_func[function][table] : raise ValueError(f"Constant {cons} already declared")
+        self.setCons(cons, function, table)
+        self.table_func[function][table][cons]['type'] = tipo
 
 
     def setFuncContent(self, function, content):
@@ -60,6 +61,9 @@ class ConsTable:
 
     def setFuncParams(self, function, params):
         self.table_func[function]['params'] = params
+    
+    def setFuncAtribs(self, function, atrib):
+        self.table_func[function]['atrib'] = atrib
 
     def removeCons(self, function, qt0, qt1):
         prms = self.getParams(function)
@@ -69,11 +73,11 @@ class ConsTable:
         
 
     def runFunc(self, function):
-        atrib0 = self.getParams(function)
+        # atrib0 = self.getParams(function)
         x = self.getFuncContent(function).evaluate()
-        atrib1 = self.getParams(function)
+        # atrib1 = self.getParams(function)
 
-        self.removeCons(function, len(atrib0), len(atrib1))
+        # self.removeCons(function, len(atrib0), len(atrib1))
 
         return x
 
