@@ -1,16 +1,11 @@
 
-int exibe(bool flag){
-    if (flag){
-        println(1);
-    }else{
-        println(0);
-    }
+/*Erro: virgula sem novo parametro*/
+int exibe(int x,){
+    println(x);
 }
 
-/*OK: Parametro por variavel*/
+
 int main(){
-    bool f;
-    f = true;
-    exibe(false);
+    exibe(5);
 }
 

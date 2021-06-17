@@ -227,6 +227,8 @@ class Parser:
         
             self.tokenizer.selectNext()
 
+            if self.token_tipo() == 'CLS' : raise ValueError("cant have , before )")
+
         self.tokenizer.selectNext()
 
         cont = self.block()
