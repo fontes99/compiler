@@ -36,6 +36,8 @@ class ConsTable:
 
         try:
             if (self.getConsType(cons, function) == 'bool' and value != 0) : value = 1
+            elif (self.getConsType(cons, function) == 'int' and value == False) : value = 0
+            elif (self.getConsType(cons, function) == 'int' and value == True) : value = 1
             self.table_func[function]['params'][cons]['value'] = value
         except:
             raise ValueError(f"Constant {cons} not assigned")

@@ -1,16 +1,33 @@
 
-int exibe(bool flag){
-    if (flag){
-        println(1);
-    }else{
-        println(0);
-    }
+/*Ok*/
+
+int soma(int x, int y)
+{
+    int res;
+    res = x + y;
+    return res;    
 }
 
-/*OK: Parametro por variavel*/
-int main(){
-    bool f;
-    f = true;
-    exibe(f);
+bool comparaSoma()
+{
+    bool res;
+    int x;
+    x = 3;
+    
+    res = soma(x,2) == 8;
+    
+    return res;
+}
+
+
+int main()
+{
+    int x;
+    bool z;
+    
+    z = comparaSoma();
+    x = z;
+    println(x);
+    
 }
 
