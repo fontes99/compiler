@@ -6,67 +6,79 @@ class ConsTable:
         self.tipinhos = ["int", "bool", "string"]
 
 
-    def setCons(self, cons, name):
-        self.table_func[name]['params'][cons] = {'value' : None, 'type' : None}
+    def setCons(self, cons, function):
+        self.table_func[function]['params'][cons] = {'value' : None, 'type' : None}
 
-    def setFunc(self, name):
-        self.table_func[name] = {'content' : None, 'return_type' : None, 'params' : {}}
-
-
-    def getConsValue(self, cons, name):
-        return self.table_func[name]['params'][cons]['value']
-
-    def getConsType(self, cons, name):
-        return self.table_func[name]['params'][cons]['type']
-
-    def getFuncContent(self, name):
-        return self.table_func[name]['content']
-
-    def getFuncParams(self, name):
-        return self.table_func[name]['params']
-
-    def getFuncReturnType(self, name):
-        return self.table_func[name]['return_type']
+    def setFunc(self, function):
+        self.table_func[function] = {'content' : None, 'return_type' : None, 'params' : {}}
 
 
-    def setConsValue(self, cons, value, name):
+    def getConsValue(self, cons, function):
+        return self.table_func[function]['params'][cons]['value']
 
-        if (type(value) == str and self.getConsType(cons, name) != 'string') or (type(value) == int and self.getConsType(cons, name) == 'string') or (type(value) == bool  and self.getConsType(cons, name) != 'bool'):
-            raise ValueError(f"Invalid operation for type {self.getConsType(cons, name)} {self.getConsValue(cons, name)} and {type(value)} {value}")
+    def getConsType(self, cons, function):
+        return self.table_func[function]['params'][cons]['type']
+
+    def getFuncContent(self, function):
+        return self.table_func[function]['content']
+
+    def getFuncParams(self, function):
+        return self.table_func[function]['params']
+
+    def getFuncReturnType(self, function):
+        return self.table_func[function]['return_type']
+
+
+    def setConsValue(self, cons, value, function):
+
+        if (type(value) == str and self.getConsType(cons, function) != 'string') or (type(value) == int and self.getConsType(cons, function) == 'string') or (type(value) == bool  and self.getConsType(cons, function) != 'bool'):
+            raise ValueError(f"Invalid operation for type {self.getConsType(cons, function)} {self.getConsValue(cons, function)} and {type(value)} {value}")
 
         try:
-            if (self.getConsType(cons, name) == 'bool' and value != 0) : value = 1
-            self.table_func[name]['params'][cons]['value'] = value
+            if (self.getConsType(cons, function) == 'bool' and value != 0) : value = 1
+            self.table_func[function]['params'][cons]['value'] = value
         except:
             raise ValueError(f"Constant {cons} not assigned")
     
-    def setConsType(self, cons, tipo, name):
-        if cons in self.table_func[name]['params'] : raise ValueError("Constant already declared")
-        self.setCons(cons, name)
-        self.table_func[name]['params'][cons]['type'] = tipo
+    def setConsType(self, cons, tipo, function):
+        if cons in self.table_func[function]['params'] : raise ValueError(f"Constant {cons} already declared")
+        self.setCons(cons, function)
+        self.table_func[function]['params'][cons]['type'] = tipo
 
 
-    def setFuncContent(self, name, content):
-        self.table_func[name]['content'] = content
+    def setFuncContent(self, function, content):
+        self.table_func[function]['content'] = content
 
-    def setFuncReturnType(self, name, tipo):
-        if name in self.table_func : raise ValueError("Function already exists")
-        self.setFunc(name)
-        self.table_func[name]['return_type'] = tipo
+    def setFuncReturnType(self, function, tipo):
+        if function in self.table_func : raise ValueError("Function already exists")
+        self.setFunc(function)
+        self.table_func[function]['return_type'] = tipo
 
-    def setFuncParams(self, name, params):
-        self.table_func[name]['params'] = params
+    def setFuncParams(self, function, params):
+        self.table_func[function]['params'] = params
+
+    def removeCons(self, cons, function, qt0, qt1):
+        prms = self.getParams(function)
+
+        for i in range(qt0, qt1):
+            del self.table_func[function]['params'][prms[i]]
         
 
-    def runFunc(self, name):
-        return self.getFuncContent(name).evaluate()
+    def runFunc(self, function):
+        atrib0 = self.getParams(function)
+        x = self.getFuncContent(function).evaluate()
+        atrib1 = self.getParams(function)
+
+        self.removeCons(1, function, len(atrib0), len(atrib1))
+
+        return x
 
 
     def getTable(self):
         return self.table_func
 
-    def getParams(self, name):
-        return list(self.table_func[name]['params'])
+    def getParams(self, function):
+        return list(self.table_func[function]['params'])
 
 
 global consTable 
