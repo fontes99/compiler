@@ -14,13 +14,18 @@ class FuncOp(Node):
             return consTable.return_["value"]
 
         elif self.value == 'param': 
+            
             for i in range(len(self.children[0])):
                 consTable.setConsValue(consTable.getParams(self.children[1])[i], self.children[0][i].evaluate(), self.func, 'params')
-
+            
+            print(f'valor de x {consTable.table_func[self.children[1]]["params"]}')
+            
             consTable.setFuncAtribs(self.children[1], {})
 
             consTable.runFunc(self.children[1])
+            
             if (type(consTable.return_["value"]) != consTable.return_["type"]) and (self.children[2] == 'factor') : raise ValueError(f"Invalid return {type(consTable.return_['value'])} for return type {consTable.return_['type']}")
             
-            print(consTable.return_)
+            print(f"  valor do return {consTable.return_}\n")
+            
             return consTable.return_["value"]

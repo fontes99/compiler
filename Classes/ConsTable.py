@@ -73,13 +73,7 @@ class ConsTable:
         
 
     def runFunc(self, function):
-        # atrib0 = self.getParams(function)
-        x = self.getFuncContent(function).evaluate()
-        # atrib1 = self.getParams(function)
-
-        # self.removeCons(function, len(atrib0), len(atrib1))
-
-        return x
+        self.getFuncContent(function).evaluate()
 
 
     def getTable(self):
