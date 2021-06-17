@@ -1,12 +1,16 @@
 
-int soma(int x, int y, int z){
-    return x + y;
+int exibe(bool flag){
+    if (flag){
+        println(1);
+    }else{
+        println(0);
+    }
 }
 
-
+/*OK: Parametro por variavel*/
 int main(){
-    int x;
-    x = soma(2,3);
-    println(x);
+    bool f;
+    f = true;
+    exibe(false);
 }
 
