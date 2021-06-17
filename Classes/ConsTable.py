@@ -31,8 +31,8 @@ class ConsTable:
 
     def setConsValue(self, cons, value, function):
 
-        if (type(value) == str and self.getConsType(cons, function) != 'string') or (type(value) == int and self.getConsType(cons, function) == 'string') or (type(value) == bool  and self.getConsType(cons, function) != 'bool'):
-            raise ValueError(f"Invalid operation for type {self.getConsType(cons, function)} {self.getConsValue(cons, function)} and {type(value)} {value}")
+        if (type(value) == str and self.getConsType(cons, function) != 'string') or (type(value) == int and self.getConsType(cons, function) == 'string') or (type(value) == bool  and self.getConsType(cons, function) == 'string'):
+            raise ValueError(f"Invalid operation for type {self.getConsType(cons, function)} {cons} and {type(value)} {value}")
 
         try:
             if (self.getConsType(cons, function) == 'bool' and value != 0) : value = 1

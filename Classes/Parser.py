@@ -54,30 +54,23 @@ class Parser:
                 self.tokenizer.selectNext()
                 if self.token_tipo() != "OPN" : raise ValueError("need ( after func call")
                 
-                self.tokenizer.selectNext()
-                if self.token_tipo() != "CLS" : 
+                prm = []
 
-                    prm = []
+                while self.token_tipo() != 'CLS':
+                    prm.append(self.OREXPR())
+                    if self.token_tipo() == "CLS" : break
+                    
+                    if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
 
-                    while self.token_tipo() != 'CLS':
-                        prm.append(self.token_valor())
-                        
-                        self.tokenizer.selectNext()
-
-                        if self.token_tipo() == "CLS" : break
-                        
-                        if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
-                        
-                        self.tokenizer.selectNext()
-
+                if (prm[0] != "CLS"):
                     if len(prm) != len(consTable.getFuncParams(func)) :  raise ValueError(f"must declare {len(consTable.getFuncParams(func))} positional arguments, got {len(prm)}")
 
                     self.tokenizer.selectNext()
-                    return FuncOp('param' , func, [prm, func])
+                    return FuncOp('param' , func, [prm, func, 'factor'])
 
                 else :
                     self.tokenizer.selectNext()
-                    return FuncOp('call', self.func_actual, [func])
+                    return FuncOp('call', self.func_actual, [0, func, 'factor'])
 
 
             tmp = VarOp('constant', self.func_actual, [self.token_valor()])
@@ -93,6 +86,10 @@ class Parser:
             tmp = IntVal(int(input()), self.func_actual, [])
             self.tokenizer.selectNext()
             return tmp
+
+        elif self.token_tipo() == "CLS" :
+            # self.tokenizer.selectNext()
+            return self.token_tipo()
 
         else:
             raise ValueError(f'{self.token_tipo()}')
@@ -306,30 +303,23 @@ class Parser:
                 self.tokenizer.selectNext()
                 if self.token_tipo() != "OPN" : raise ValueError("need ( after func call")
                 
-                self.tokenizer.selectNext()
-                if self.token_tipo() != "CLS" : 
+                prm = []
 
-                    prm = []
+                while self.token_tipo() != 'CLS':
+                    prm.append(self.OREXPR())
+                    if self.token_tipo() == "CLS" : break
+                    
+                    if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
 
-                    while self.token_tipo() != 'CLS':
-                        prm.append(self.token_valor())
-                        
-                        self.tokenizer.selectNext()
-
-                        if self.token_tipo() == "CLS" : break
-                        
-                        if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
-                        
-                        self.tokenizer.selectNext()
-
+                if (prm[0] != NoOp):
                     if len(prm) != len(consTable.getFuncParams(func)) :  raise ValueError(f"must declare {len(consTable.getFuncParams(func))} positional arguments, got {len(prm)}")
 
                     self.tokenizer.selectNext()
-                    return FuncOp('param' , func, [prm, func])
+                    return FuncOp('param' , func, [prm, func, 'command'])
 
                 else :
                     self.tokenizer.selectNext()
-                    return FuncOp('call', self.func_actual, [func])
+                    return FuncOp('call', self.func_actual, [0, func, 'command'])
 
             
             else : tree = self.identifier()

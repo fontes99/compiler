@@ -1,18 +1,16 @@
 
-/*Error: tipo de retorno*/
-
-int soma(int x, int y)
-{
-    int res;
-    res = x + y;
-    return "somei";    
+int exibe(bool flag){
+    if (flag){
+        println(1);
+    }else{
+        println(0);
+    }
 }
 
-int main()
-{
-    string x;
-    x = soma(3,2);
-    println(x);
-    
+/*OK: Parametro por variavel*/
+int main(){
+    bool f;
+    f = true;
+    exibe(f);
 }
 
