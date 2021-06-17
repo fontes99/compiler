@@ -314,7 +314,7 @@ class Parser:
                         
                         self.tokenizer.selectNext()
 
-                        if self.token_tipo() == "CLS" : breaks
+                        if self.token_tipo() == "CLS" : break
                         
                         if self.token_tipo() != "SEP" : raise ValueError("need , after param in func call")
                         
