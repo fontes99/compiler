@@ -18,4 +18,5 @@ class UnOp(Node):
             print(self.children[0].evaluate())
         
         elif self.value == 'return':
-            consTable.return_ = self.children[0].evaluate()
+            consTable.return_["type"] = consTable.table_func[self.func]['return_type']
+            consTable.return_["value"] = self.children[0].evaluate()

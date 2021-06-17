@@ -52,7 +52,9 @@ class ConsTable:
     def setFuncReturnType(self, function, tipo):
         if function in self.table_func : raise ValueError("Function already exists")
         self.setFunc(function)
-        self.table_func[function]['return_type'] = tipo
+        if tipo == 'string' : self.table_func[function]['return_type'] = str
+        if tipo == 'int' : self.table_func[function]['return_type'] = int
+        if tipo == 'bool' : self.table_func[function]['return_type'] = bool
 
     def setFuncParams(self, function, params):
         self.table_func[function]['params'] = params
