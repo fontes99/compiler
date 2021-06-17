@@ -5,141 +5,16 @@ valor de x {'x': {'type': 'int', 'value': 2}}
 valor de x {'x': {'type': 'int', 'value': 1}}
   valor do return {'value': 1, 'type': <class 'int'>}
 
-valor de x {'x': {'type': 'int', 'value': 0}}
-valor de x {'x': {'type': 'int', 'value': -1}}
-valor de x {'x': {'type': 'int', 'value': -2}}
-valor de x {'x': {'type': 'int', 'value': -3}}
-valor de x {'x': {'type': 'int', 'value': -4}}
-valor de x {'x': {'type': 'int', 'value': -5}}
-valor de x {'x': {'type': 'int', 'value': -6}}
-valor de x {'x': {'type': 'int', 'value': -7}}
-valor de x {'x': {'type': 'int', 'value': -8}}
-valor de x {'x': {'type': 'int', 'value': -9}}
-valor de x {'x': {'type': 'int', 'value': -10}}
-valor de x {'x': {'type': 'int', 'value': -11}}
-valor de x {'x': {'type': 'int', 'value': -12}}
-valor de x {'x': {'type': 'int', 'value': -13}}
-valor de x {'x': {'type': 'int', 'value': -14}}
-valor de x {'x': {'type': 'int', 'value': -15}}
-valor de x {'x': {'type': 'int', 'value': -16}}
-valor de x {'x': {'type': 'int', 'value': -17}}
-valor de x {'x': {'type': 'int', 'value': -18}}
-valor de x {'x': {'type': 'int', 'value': -19}}
-valor de x {'x': {'type': 'int', 'value': -20}}
-valor de x {'x': {'type': 'int', 'value': -21}}
-valor de x {'x': {'type': 'int', 'value': -22}}
-valor de x {'x': {'type': 'int', 'value': -23}}
-valor de x {'x': {'type': 'int', 'value': -24}}
-valor de x {'x': {'type': 'int', 'value': -25}}
-valor de x {'x': {'type': 'int', 'value': -26}}
-valor de x {'x': {'type': 'int', 'value': -27}}
-valor de x {'x': {'type': 'int', 'value': -28}}
-valor de x {'x': {'type': 'int', 'value': -29}}
-valor de x {'x': {'type': 'int', 'value': -30}}
-valor de x {'x': {'type': 'int', 'value': -31}}
-valor de x {'x': {'type': 'int', 'value': -32}}
-valor de x {'x': {'type': 'int', 'value': -33}}
-valor de x {'x': {'type': 'int', 'value': -34}}
-valor de x {'x': {'type': 'int', 'value': -35}}
-valor de x {'x': {'type': 'int', 'value': -36}}
-valor de x {'x': {'type': 'int', 'value': -37}}
-valor de x {'x': {'type': 'int', 'value': -38}}
-valor de x {'x': {'type': 'int', 'value': -39}}
-valor de x {'x': {'type': 'int', 'value': -40}}
-valor de x {'x': {'type': 'int', 'value': -41}}
-valor de x {'x': {'type': 'int', 'value': -42}}
-valor de x {'x': {'type': 'int', 'value': -43}}
-valor de x {'x': {'type': 'int', 'value': -44}}
-valor de x {'x': {'type': 'int', 'value': -45}}
-valor de x {'x': {'type': 'int', 'value': -46}}
-valor de x {'x': {'type': 'int', 'value': -47}}
-valor de x {'x': {'type': 'int', 'value': -48}}
-valor de x {'x': {'type': 'int', 'value': -49}}
-valor de x {'x': {'type': 'int', 'value': -50}}
-valor de x {'x': {'type': 'int', 'value': -51}}
-valor de x {'x': {'type': 'int', 'value': -52}}
-valor de x {'x': {'type': 'int', 'value': -53}}
-valor de x {'x': {'type': 'int', 'value': -54}}
-valor de x {'x': {'type': 'int', 'value': -55}}
-valor de x {'x': {'type': 'int', 'value': -56}}
-valor de x {'x': {'type': 'int', 'value': -57}}
-valor de x {'x': {'type': 'int', 'value': -58}}
-valor de x {'x': {'type': 'int', 'value': -59}}
-valor de x {'x': {'type': 'int', 'value': -60}}
-valor de x {'x': {'type': 'int', 'value': -61}}
-valor de x {'x': {'type': 'int', 'value': -62}}
-valor de x {'x': {'type': 'int', 'value': -63}}
-valor de x {'x': {'type': 'int', 'value': -64}}
-valor de x {'x': {'type': 'int', 'value': -65}}
-valor de x {'x': {'type': 'int', 'value': -66}}
-valor de x {'x': {'type': 'int', 'value': -67}}
-valor de x {'x': {'type': 'int', 'value': -68}}
-valor de x {'x': {'type': 'int', 'value': -69}}
-valor de x {'x': {'type': 'int', 'value': -70}}
-valor de x {'x': {'type': 'int', 'value': -71}}
-valor de x {'x': {'type': 'int', 'value': -72}}
-valor de x {'x': {'type': 'int', 'value': -73}}
-valor de x {'x': {'type': 'int', 'value': -74}}
-valor de x {'x': {'type': 'int', 'value': -75}}
-valor de x {'x': {'type': 'int', 'value': -76}}
-valor de x {'x': {'type': 'int', 'value': -77}}
-valor de x {'x': {'type': 'int', 'value': -78}}
-valor de x {'x': {'type': 'int', 'value': -79}}
-valor de x {'x': {'type': 'int', 'value': -80}}
-valor de x {'x': {'type': 'int', 'value': -81}}
-valor de x {'x': {'type': 'int', 'value': -82}}
-valor de x {'x': {'type': 'int', 'value': -83}}
-valor de x {'x': {'type': 'int', 'value': -84}}
-valor de x {'x': {'type': 'int', 'value': -85}}
-valor de x {'x': {'type': 'int', 'value': -86}}
-valor de x {'x': {'type': 'int', 'value': -87}}
-valor de x {'x': {'type': 'int', 'value': -88}}
-valor de x {'x': {'type': 'int', 'value': -89}}
-valor de x {'x': {'type': 'int', 'value': -90}}
-valor de x {'x': {'type': 'int', 'value': -91}}
-valor de x {'x': {'type': 'int', 'value': -92}}
-valor de x {'x': {'type': 'int', 'value': -93}}
-valor de x {'x': {'type': 'int', 'value': -94}}
-valor de x {'x': {'type': 'int', 'value': -95}}
-valor de x {'x': {'type': 'int', 'value': -96}}
-valor de x {'x': {'type': 'int', 'value': -97}}
-valor de x {'x': {'type': 'int', 'value': -98}}
-valor de x {'x': {'type': 'int', 'value': -99}}
-valor de x {'x': {'type': 'int', 'value': -100}}
-valor de x {'x': {'type': 'int', 'value': -101}}
-valor de x {'x': {'type': 'int', 'value': -102}}
-valor de x {'x': {'type': 'int', 'value': -103}}
-valor de x {'x': {'type': 'int', 'value': -104}}
-valor de x {'x': {'type': 'int', 'value': -105}}
-valor de x {'x': {'type': 'int', 'value': -106}}
-valor de x {'x': {'type': 'int', 'value': -107}}
-valor de x {'x': {'type': 'int', 'value': -108}}
-valor de x {'x': {'type': 'int', 'value': -109}}
-valor de x {'x': {'type': 'int', 'value': -110}}
-valor de x {'x': {'type': 'int', 'value': -111}}
-valor de x {'x': {'type': 'int', 'value': -112}}
-valor de x {'x': {'type': 'int', 'value': -113}}
-valor de x {'x': {'type': 'int', 'value': -114}}
-valor de x {'x': {'type': 'int', 'value': -115}}
-valor de x {'x': {'type': 'int', 'value': -116}}
-valor de x {'x': {'type': 'int', 'value': -117}}
-valor de x {'x': {'type': 'int', 'value': -118}}
-valor de x {'x': {'type': 'int', 'value': -119}}
-valor de x {'x': {'type': 'int', 'value': -120}}
-valor de x {'x': {'type': 'int', 'value': -121}}
-valor de x {'x': {'type': 'int', 'value': -122}}
-valor de x {'x': {'type': 'int', 'value': -123}}
-valor de x {'x': {'type': 'int', 'value': -124}}
-valor de x {'x': {'type': 'int', 'value': -125}}
-valor de x {'x': {'type': 'int', 'value': -126}}
-valor de x {'x': {'type': 'int', 'value': -127}}
-valor de x {'x': {'type': 'int', 'value': -128}}
-valor de x {'x': {'type': 'int', 'value': -129}}
-valor de x {'x': {'type': 'int', 'value': -130}}
-valor de x {'x': {'type': 'int', 'value': -131}}
-valor de x {'x': {'type': 'int', 'value': -132}}
-valor de x {'x': {'type': 'int', 'value': -133}}
-valor de x {'x': {'type': 'int', 'value': -134}}
-valor de x {'x': {'type': 'int', 'value': -135}}
-valor de x {'x': {'type': 'int', 'value': -136}}
-valor de x {'x': {'type': 'int', 'value': -137}}
+True
+  valor do return {'value': 2, 'type': <class 'int'>}
+
+True
+  valor do return {'value': 3, 'type': <class 'int'>}
+
+True
+  valor do return {'value': 4, 'type': <class 'int'>}
+
+True
+  valor do return {'value': 5, 'type': <class 'int'>}
+
+5
